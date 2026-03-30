@@ -1,19 +1,21 @@
-# Twilio-SMS-Client
+#  Twilio SMS Client System
 
-## Software Requirements Specification (SRS)
+> **Software Requirements Specification (SRS)**  
+> Version 1.0 | IEEE 830 Standard | Java Servlets & JSP
 
 ---
 
-## Table of Contents
+##  Table of Contents
 
 1. [Introduction](#1-introduction)
 2. [Overall Description](#2-overall-description)
-3. [User Classes and Characteristics](#3-user-classes-and-characteristics)
-4. [System Features and Requirements](#4-system-features-and-requirements)
+3. [System Features](#3-system-features)
+4. [External Interface Requirements](#4-external-interface-requirements)
 5. [Non-Functional Requirements](#5-non-functional-requirements)
-6. [Entity Data Models](#6-entity-data-models)
-7. [User Stories](#7-user-stories)
-8. [Bonus Features](#8-bonus-features)
+6. [System Constraints](#6-system-constraints)
+7. [Class Diagram](#7-class-diagram)
+8. [Database Design (ERD)](#8-database-design-erd)
+9. [Future Enhancements](#9-future-enhancements)
 
 ---
 
@@ -21,37 +23,53 @@
 
 ### 1.1 Purpose
 
-This document provides a full Software Requirements Specification (SRS) for the **Twilio SMS Client** web application. It defines the functional and non-functional requirements for all user roles, system behaviors, and data models to guide the development team throughout the project lifecycle.
+The purpose of this document is to describe the software requirements for the **Twilio SMS Client System**. This system allows customers to send SMS messages using their personal Twilio accounts, while administrators can manage customer accounts and monitor SMS usage statistics.
+
+This document serves as a reference for developers, testers, and all project stakeholders.
+
+---
 
 ### 1.2 Scope
 
-The **Twilio SMS Client** is a web-based application that enables customers to send and manage SMS messages through their personal Twilio accounts. The system also provides administrators with tools to manage customers and monitor usage statistics.
+The **Twilio SMS Client System** is a web-based application developed using **Java Servlets and JSP**.
 
-Key capabilities include:
+| User Type | Description |
+|-----------|-------------|
+|  **Customer** | Can register, verify account, send SMS, and manage message history |
+|  **Administrator** | Can manage customer accounts and monitor SMS usage statistics |
 
-- User registration and authentication (with SMS-based phone number verification via Twilio)
-- Customer SMS sending and history management
-- Administrator dashboard for customer management and statistics
-- Role-based access control (Administrator vs. Customer)
+The system integrates with the **Twilio SMS API** to deliver SMS messages.
+
+---
 
 ### 1.3 Definitions, Acronyms, and Abbreviations
 
-| Term | Definition |
-|------|------------|
-| **SRS** | Software Requirements Specification |
+| Term | Description |
+|------|-------------|
 | **SMS** | Short Message Service |
-| **MSISDN** | Mobile Station International Subscriber Directory Number (phone number) |
-| **SID** | Twilio Account SID (unique account identifier) |
-| **Token** | Twilio Auth Token (used for API authentication) |
-| **SenderID** | The allowed Twilio phone number used to send SMS |
-| **Admin** | System Administrator |
-| **CRUD** | Create, Read, Update, Delete |
-| **2FA** | Two-Factor Authentication |
+| **API** | Application Programming Interface |
+| **Twilio** | Cloud communications platform used to send SMS |
+| **MSISDN** | Mobile phone number |
+| **SRS** | Software Requirements Specification |
+| **SID** | Twilio Account Identifier |
+| **JSP** | JavaServer Pages |
+| **DAO** | Data Access Object |
+| **OTP** | One-Time Password (verification code) |
+| **3NF** | Third Normal Form (database normalization level) |
+
+---
 
 ### 1.4 References
 
-- [Twilio Official Documentation](https://www.twilio.com/docs)
-- [IEEE Standard for Software Requirements Specifications (IEEE 830–1998)](https://medium.com/@abdul.rehman_84899/ieee-standard-for-software-requirements-specifications-ieee-830-1998-0395f1da639a)
+- IEEE 830 Software Requirements Specification Standard
+- [Twilio API Documentation](https://www.twilio.com/docs)
+- Java Servlet Documentation
+
+---
+
+### 1.5 Overview
+
+This document covers: overall system description, system features, functional requirements, non-functional requirements, class diagram, database ERD, and system constraints.
 
 ---
 
@@ -59,246 +77,774 @@ Key capabilities include:
 
 ### 2.1 Product Perspective
 
-The Twilio SMS Client is a standalone web application that acts as a management interface and SMS gateway. Each customer uses their own Twilio credentials to send messages, ensuring billing and account isolation. The system does not share Twilio credentials between users.
+The Twilio SMS Client System is a **web application** that allows customers to send SMS messages through their own Twilio accounts. The system architecture follows a **three-layer structure**:
+
+```
+┌──────────────────────────────────────────┐
+│           Presentation Layer             │
+│            (JSP / HTML / CSS)            │
+├──────────────────────────────────────────┤
+│          Business Logic Layer            │
+│      (Java Servlets / Service Classes)   │
+├──────────────────────────────────────────┤
+│           Data Access Layer              │
+│          (DAO Classes / MySQL)           │
+└──────────────────────────────────────────┘
+                 ↕ Twilio API
+```
+
+---
 
 ### 2.2 Product Functions
 
-- User registration with profile data and Twilio credentials
-- Phone number (MSISDN) validation via Twilio SMS OTP
-- Authenticated login with role-based redirection
-- SMS sending using the customer's own Twilio account
-- SMS history management (view, search, delete)
-- Admin panel for customer management and statistics
-- (Bonus) Inbound SMS handling via Twilio Callback URL
+####  Customer Functions
 
-### 2.3 Operating Environment
+| # | Function |
+|---|----------|
+| 1 | Register a new account |
+| 2 | Verify phone number via SMS OTP |
+| 3 | Login and logout |
+| 4 | View and edit profile |
+| 5 | Send SMS messages |
+| 6 | View SMS history |
+| 7 | Search SMS messages |
+| 8 | Delete SMS records |
 
-- Web-based application (accessible via browser)
-- Backend integrated with the Twilio REST API
-- Database for storing user profiles, credentials, and SMS history
+####  Administrator Functions
 
----
-
-## 3. User Classes and Characteristics
-
-| User Type | Description | Access Level |
-|-----------|-------------|--------------|
-| **Customer** | A registered user who has validated their phone number and uses their Twilio account to send/receive SMS | Standard — can only manage their own data and SMS |
-| **Administrator** | A privileged system operator who manages all customer accounts and monitors statistics | Elevated — full customer CRUD and stats visibility |
-
-> After login, each user is **redirected to a role-specific Home page** based on their privileges.
+| # | Function |
+|---|----------|
+| 1 | View all customers |
+| 2 | Add new customers |
+| 3 | Edit customer information |
+| 4 | Delete customers |
+| 5 | View SMS statistics per customer |
 
 ---
 
-## 4. System Features and Requirements
+### 2.3 User Classes and Characteristics
 
-### 4.1 User Authentication & Authorization
+####  Customer
+- Basic knowledge of web applications
+- Owns a personal Twilio account
+- Must verify phone number before accessing the system
+- Can only access and manage their own data
 
-**Description:**  
-All users must authenticate before accessing any system features. The system supports username/password login and redirects users based on their role.
-
-| ID | Requirement |
-|----|-------------|
-| FR-1.1 | The system shall provide a login page accepting username and password |
-| FR-1.2 | The system shall authenticate users against stored credentials |
-| FR-1.3 | The system shall support two roles: `Customer` and `Administrator` |
-| FR-1.4 | After login, the system shall redirect users to a role-specific Home page |
-| FR-1.5 | The system shall restrict all features based on the authenticated user's role |
-| FR-1.6 | The system shall allow any user to logout and log back in with a different account |
+####  Administrator
+- Higher access privileges than customers
+- Responsible for overall customer management
+- Can view all customers' data and SMS statistics
 
 ---
 
-### 4.2 Customer Registration
+### 2.4 Operating Environment
 
-**Description:**  
-New customers can create an account by providing profile data and their Twilio credentials.
-
-| ID | Requirement |
-|----|-------------|
-| FR-2.1 | The system shall provide a sign-up page for new customers |
-| FR-2.2 | The registration form shall collect: name, birthday, password, phone number (MSISDN), job, email, address, Twilio Account SID, Twilio Auth Token, and Twilio Sender ID |
-| FR-2.3 | The system shall validate the customer's MSISDN by sending a random short OTP code via SMS using the customer's own Twilio credentials |
-| FR-2.4 | The customer must enter the received OTP code to complete account activation |
-| FR-2.5 | The customer shall not be able to log in until MSISDN validation is complete |
+| Component | Technology |
+|-----------|------------|
+| **Backend** | Java Servlets |
+| **Frontend** | HTML, CSS, JSP |
+| **Database** | MySQL |
+| **Server** | Apache Tomcat |
+| **External Service** | Twilio SMS API |
+| **Browser Support** | Chrome, Firefox, Edge |
 
 ---
 
-### 4.3 Customer Profile Management
+### 2.5 Design and Implementation Constraints
 
-**Description:**  
-Authenticated customers can view and update their profile information.
-
-| ID | Requirement |
-|----|-------------|
-| FR-3.1 | The system shall provide a profile page displaying all registered customer information |
-| FR-3.2 | The customer shall be able to edit any previously entered profile fields |
-| FR-3.3 | Profile changes shall be saved and reflected immediately |
+-  Implemented using **Java Servlets**
+-  Must use **Twilio API** for SMS sending
+-  Must use a **relational database (MySQL)**
+-  Must use **HTTP session-based authentication**
+-  Passwords must be securely stored using **hashing**
 
 ---
 
-### 4.4 SMS Sending (Customer)
+### 2.6 Assumptions and Dependencies
 
-**Description:**  
-Customers can compose and send SMS messages using their own Twilio account credentials.
+**Assumptions:**
+- Customers have valid, active Twilio accounts
+- Internet connectivity is available on the server
 
-| ID | Requirement |
-|----|-------------|
-| FR-4.1 | The system shall provide an SMS sending form |
-| FR-4.2 | The form shall accept: `From` (Sender ID), `To` (recipient phone number), and `Body` (message content) |
-| FR-4.3 | The system shall use the customer's stored Twilio Account SID and Auth Token to send the SMS |
-| FR-4.4 | The `From` field shall only allow the customer's registered Twilio Sender ID |
-| FR-4.5 | The system shall confirm successful delivery or display an appropriate error |
+**Dependencies:**
+- Twilio API availability
+- Database server availability
 
 ---
 
-### 4.5 SMS History Management (Customer)
+## 3. System Features
 
-**Description:**  
-Customers can view, search, and delete their personal SMS history.
+### 3.1 User Registration
 
-| ID | Requirement |
-|----|-------------|
-| FR-5.1 | The system shall display a full list of all SMS messages sent from the customer's account |
-| FR-5.2 | Each record shall show: `From`, `To`, `Body`, and `Date` |
-| FR-5.3 | The customer shall be able to delete specific SMS records from their history |
-| FR-5.4 | The customer shall be able to search SMS history by `From` address |
-| FR-5.5 | The customer shall be able to search SMS history by `To` address |
-| FR-5.6 | The customer shall be able to search SMS history by `Date Range` |
+**Description:** Customers create a new account by providing personal information and Twilio credentials.
 
----
+**Inputs:**
 
-### 4.6 Administrator – Customer Management
+| Field | Type |
+|-------|------|
+| Full Name | Text |
+| Birthday | Date |
+| Username | Text |
+| Password | Password |
+| Phone Number (MSISDN) | Text |
+| Email | Email |
+| Address | Text |
+| Twilio Account SID | Text |
+| Twilio Auth Token | Text |
+| Twilio Sender ID | Text |
 
-**Description:**  
-Administrators can manage all registered customer accounts from a central dashboard.
-
-| ID | Requirement |
-|----|-------------|
-| FR-6.1 | The admin shall be able to view a list of all registered customers |
-| FR-6.2 | The admin shall be able to view the profile details of a specific customer |
-| FR-6.3 | The admin shall be able to edit customer information |
-| FR-6.4 | The admin shall be able to delete a customer account |
+**Processing:** Validate input → Store in database → Send verification SMS via Twilio  
+**Output:** Account created → redirect to verification page
 
 ---
 
-### 4.7 Administrator – Statistics
+### 3.2 Account Verification
 
-**Description:**  
-Administrators can monitor SMS usage across all customer accounts.
+**Description:** Customers verify their phone number with a random OTP sent via SMS before they can log in.
 
-| ID | Requirement |
-|----|-------------|
-| FR-7.1 | The admin dashboard shall display SMS sending statistics per customer |
-| FR-7.2 | Statistics shall show the total number of SMS messages sent from each customer's account |
+**Inputs:** Verification Code (OTP)  
+**Processing:** Validate OTP → Activate account  
+**Output:** Success → redirect to login | Failure → error message
+
+---
+
+### 3.3 User Login
+
+**Description:** Users log in using their username and password.
+
+**Inputs:** Username, Password  
+**Processing:** Validate credentials → Check verification status → Create session with role  
+**Output:** Redirect to appropriate dashboard (Customer or Administrator)
+
+---
+
+### 3.4 Send SMS
+
+**Description:** Customers send SMS using their own Twilio account credentials.
+
+**Inputs:**
+
+| Field | Description |
+|-------|-------------|
+| From | Twilio Sender ID (pre-filled from profile) |
+| To | Recipient phone number |
+| Body | Message content |
+
+**Processing:** Send via Twilio API → Save record to database  
+**Output:** SMS sent confirmation or descriptive error message
+
+---
+
+### 3.5 SMS History
+
+**Description:** Customers view all previously sent SMS messages from their own account only.
+
+| Column | Description |
+|--------|-------------|
+| From | Sender number |
+| To | Recipient number |
+| Body | Message content |
+| Date Sent | Timestamp |
+
+---
+
+### 3.6 Search SMS
+
+**Description:** Customers filter their message history.
+
+| Filter | Description |
+|--------|-------------|
+| From | Filter by sender number |
+| To | Filter by recipient number |
+| Date Range | Filter by start and end date |
+
+---
+
+### 3.7 Delete SMS
+
+**Description:** Customers remove specific messages from their history.  
+**Processing:** Remove or soft-delete the SMS record from the database.
+
+---
+
+### 3.8 Customer Management *(Admin)*
+
+**Description:** Administrators perform full CRUD operations on customer accounts.
+
+| Action | Description |
+|--------|-------------|
+| View List | See all registered customers |
+| View Details | See a specific customer's full profile |
+| Edit | Update customer information |
+| Delete | Remove a customer account |
+
+---
+
+### 3.9 SMS Statistics *(Admin)*
+
+**Description:** Administrators view SMS usage across all customer accounts.
+
+| Column | Description |
+|--------|-------------|
+| Customer Name | Full name |
+| Username | Login username |
+| Total SMS Sent | Count of all messages sent |
+
+---
+
+## 4. External Interface Requirements
+
+### 4.1 User Interface
+
+| Page | Access |
+|------|--------|
+| Home Page | Public |
+| Login Page | Public |
+| Registration Page | Public |
+| Account Verification Page | Customer (unverified) |
+| Customer Dashboard | Customer |
+| Administrator Dashboard | Admin |
+| Profile Page | Customer |
+| Send SMS Page | Customer |
+| SMS History Page | Customer |
+| Search SMS Page | Customer |
+| Customer Management Page | Admin |
+| Statistics Page | Admin |
+
+---
+
+### 4.2 Software Interface
+
+| Interface | Description |
+|-----------|-------------|
+| **Twilio API** | Used for sending and receiving SMS messages |
+| **MySQL Database** | Used for data persistence |
+| **Apache Tomcat** | Java web application server |
+
+---
+
+### 4.3 Communication Interface
+
+The system communicates with external services using **HTTPS requests to the Twilio REST API**. All internal communication uses standard HTTP sessions.
 
 ---
 
 ## 5. Non-Functional Requirements
 
-### 5.1 Security Requirements
+### 5.1 Performance Requirements
 
 | ID | Requirement |
 |----|-------------|
-| NFR-1.1 | Passwords shall be hashed before storage (e.g., bcrypt) |
-| NFR-1.2 | Twilio credentials (SID and Auth Token) shall be stored securely and encrypted at rest |
-| NFR-1.3 | Role-based access control (RBAC) shall be enforced on all routes |
-| NFR-1.4 | All data transmission shall use HTTPS |
-| NFR-1.5 | User sessions shall expire after a defined period of inactivity |
+| NFR-1.1 | The system shall process SMS requests within **3 seconds** |
+| NFR-1.2 | The system shall support multiple concurrent users |
+| NFR-1.3 | Search results shall be returned within **2 seconds** |
 
-### 5.2 Performance Requirements
+### 5.2 Security Requirements
 
 | ID | Requirement |
 |----|-------------|
-| NFR-2.1 | Pages shall load within 3 seconds under normal conditions |
-| NFR-2.2 | SMS search results shall be returned within 2 seconds |
+| NFR-2.1 | Passwords shall be stored using a secure hashing algorithm (e.g., bcrypt) |
+| NFR-2.2 | Only authenticated users can access system features |
+| NFR-2.3 | Role-based access control (RBAC) shall be enforced on all pages |
+| NFR-2.4 | Twilio credentials (SID & Token) shall be stored encrypted at rest |
+| NFR-2.5 | All data transmission shall use HTTPS |
 
-### 5.3 Usability Requirements
+### 5.3 Reliability Requirements
 
 | ID | Requirement |
 |----|-------------|
-| NFR-3.1 | The UI shall be intuitive, clean, and easy to navigate |
-| NFR-3.2 | Error messages shall be descriptive and user-friendly |
-| NFR-3.3 | The application shall be accessible on desktop and mobile browsers |
+| NFR-3.1 | The system shall maintain complete message logs |
+| NFR-3.2 | All errors shall be handled gracefully with user-friendly messages |
 
 ### 5.4 Availability Requirements
 
 | ID | Requirement |
 |----|-------------|
-| NFR-4.1 | The system shall target 99% uptime |
-| NFR-4.2 | The system shall be available 24/7 |
+| NFR-4.1 | The system shall be available **24/7** |
+| NFR-4.2 | System uptime shall target **99%** or higher |
 
-### 5.5 Maintainability Requirements
+### 5.5 Usability Requirements
 
 | ID | Requirement |
 |----|-------------|
-| NFR-5.1 | Code shall be modular, clean, and well-documented |
-| NFR-5.2 | The system shall support easy updates and feature additions |
+| NFR-5.1 | The user interface shall be simple and intuitive |
+| NFR-5.2 | Users shall be able to send an SMS in minimal steps |
+| NFR-5.3 | The application shall be accessible on desktop and mobile browsers |
 
 ---
 
-## 6. Entity Data Models
+## 6. System Constraints
 
-### 6.1 Customer Entity
+-  Use **Java Servlets** as the backend framework
+-  Integrate with the **Twilio SMS API** for all SMS operations
+-  Store all data in a **MySQL relational database**
+-  Use **web browsers** as the only client interface
+-  Use **HTTP session-based authentication**
 
-| Attribute | Data Type | Description |
-|-----------|-----------|-------------|
-| `customer_id` | Integer | Unique identifier (Primary Key) |
-| `name` | String | Full name |
-| `birthday` | Date | Date of birth |
-| `password` | String (hashed) | Hashed password |
-| `msisdn` | String | Phone number |
-| `job` | String | Job title |
+---
+
+## 7. Class Diagram
+
+The system is organized into **5 layers**: Domain Classes, Service Layer, DAO Layer, Utility Classes, and their relationships.
+
+---
+
+### 7.1 Domain Classes
+
+####  User *(Base Class)*
+
+The `User` class is the base entity for all system users. Both `Customer` and `Administrator` inherit from it.
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `userId` | int | Unique user identifier |
+| `username` | String | Login username |
+| `passwordHash` | String | Encrypted password |
+| `role` | Role | User role (Admin / Customer) |
+| `isVerified` | boolean | Whether account is verified |
+| `isActive` | boolean | Whether account is active |
+| `createdAt` | Date | Account creation timestamp |
+
+**Methods:**
+- `login(username, password)`
+- `logout()`
+- `changePassword()`
+
+---
+
+####  Administrator *(extends User)*
+
+The `Administrator` class represents users who manage the system and customer accounts.
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `adminId` | int | Unique administrator identifier |
+
+**Methods:**
+- `viewCustomers()`
+- `addCustomer()`
+- `editCustomer()`
+- `deleteCustomer()`
+- `viewCustomerStatistics()`
+
+---
+
+####  Customer *(extends User)*
+
+The `Customer` class represents users who send SMS messages through their Twilio account.
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `customerId` | int | Unique customer identifier |
+| `fullName` | String | Customer's full name |
+| `birthDate` | Date | Date of birth |
+| `phoneNumber` | String | MSISDN |
+| `jobTitle` | String | Job title |
 | `email` | String | Email address |
 | `address` | String | Physical address |
-| `twilio_sid` | String (encrypted) | Twilio Account SID |
-| `twilio_token` | String (encrypted) | Twilio Auth Token |
-| `twilio_sender_id` | String | Twilio Sender Phone Number |
-| `is_validated` | Boolean | Whether MSISDN is verified |
-| `created_at` | DateTime | Account creation timestamp |
+| `twilioAccountSID` | String | Twilio Account SID |
+| `twilioAuthToken` | String | Twilio Auth Token |
+| `twilioSenderId` | String | Allowed Twilio Sender ID |
 
-### 6.2 SMS Entity
+**Methods:**
+- `register()`
+- `updateProfile()`
+- `sendSMS()`
+- `viewSMSHistory()`
+- `searchSMS()`
+- `deleteSMS()`
 
-| Attribute | Data Type | Description |
-|-----------|-----------|-------------|
-| `sms_id` | Integer | Unique identifier (Primary Key) |
-| `customer_id` | Integer | Foreign key referencing Customer |
-| `from` | String | Sender phone number (Twilio Sender ID) |
-| `to` | String | Recipient phone number |
-| `body` | String | SMS content |
-| `date` | DateTime | Timestamp of the SMS |
-| `direction` | Enum | `outbound` / `inbound` (bonus) |
+**Relationship:** `Customer (1) ───────── (*) SMSMessage`
 
 ---
 
-## 7. User Stories
+####  SMSMessage
 
-> **As a Customer,**  
-> I want to register using my Twilio credentials and validate my phone number via SMS,  
-> so that I can securely send and track messages through my own Twilio account without sharing credentials with others.
+The `SMSMessage` class represents an SMS message sent through the system.
 
-> **As a Customer,**  
-> I want to view my full SMS history and search by date, sender, or recipient,  
-> so that I can quickly find and manage past messages.
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `smsId` | int | Unique SMS identifier |
+| `fromNumber` | String | Sender phone number |
+| `toNumber` | String | Recipient phone number |
+| `body` | String | SMS message content |
+| `status` | String | Sent / Failed / Delivered / Queued |
+| `sentDate` | Date | Timestamp of sending |
+| `twilioMessageSid` | String | Twilio-returned message SID |
 
-> **As an Administrator,**  
-> I want to manage all registered customer accounts from a central dashboard,  
-> so that I can monitor usage, resolve issues, and maintain system integrity efficiently.
+**Methods:**
+- `createSMS()`
+- `deleteSMS()`
+- `getSMSDetails()`
 
----
-
-## 8. Bonus Features
-
-| ID | Feature | Description |
-|----|---------|-------------|
-| BNS-1 | Inbound SMS Support | Configure a Twilio Callback URL to receive inbound SMS and save them to the customer's database |
-| BNS-2 | Inbound SMS Listing | Allow customers to view all inbound SMS messages received on their Twilio account |
+**Relationship:** `Customer (1) ───────── (*) SMSMessage`
 
 ---
 
-## Project Status
+####  VerificationCode
+
+The `VerificationCode` class manages account verification via SMS OTP.
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `verificationId` | int | Unique record identifier |
+| `code` | String | Random OTP code |
+| `sentTo` | String | Phone number the code was sent to |
+| `sentAt` | Date | When the code was sent |
+| `expiresAt` | Date | Code expiry timestamp |
+| `isUsed` | boolean | Whether code has been used |
+
+**Methods:**
+- `generateCode()`
+- `validateCode()`
+- `markAsUsed()`
+
+**Relationship:** `User (1) ───────── (*) VerificationCode`
+
+---
+
+### 7.2 Class Relationships Overview
+
+```
+              ┌─────────────┐
+              │    User     │  (Base Class)
+              └──────┬──────┘
+          ┌──────────┴──────────┐
+          │                     │
+  ┌───────▼───────┐    ┌────────▼────────┐
+  │ Administrator │    │    Customer     │
+  └───────────────┘    └────────┬────────┘
+                                │ 1
+                                │
+                                │ *
+                       ┌────────▼────────┐
+                       │   SMSMessage    │
+                       └─────────────────┘
+
+  ┌─────────────┐
+  │    User     │──── 1 ────────── * ────── VerificationCode
+  └─────────────┘
+```
+
+---
+
+### 7.3 Service Layer Classes
+
+Service classes contain the main **business logic** of the application.
+
+| Service Class | Responsibility | Uses |
+|---------------|---------------|------|
+| **AuthService** | Authentication & account management | UserDAO, VerificationService |
+| **SMSService** | SMS sending & management | SMSDAO, TwilioService |
+| **CustomerService** | Customer profile operations | CustomerDAO |
+| **AdminService** | Administrative operations | CustomerDAO, SMSDAO |
+| **VerificationService** | OTP generation & validation | VerificationDAO |
+
+#### AuthService Methods
+- `login(username, password)`
+- `logout(session)`
+- `registerCustomer(customerData)`
+- `verifyAccount(userId, code)`
+- `sendVerificationCode(userId)`
+
+#### SMSService Methods
+- `sendSMS(customerId, from, to, body)`
+- `deleteSMS(smsId)`
+- `getSMSHistory(customerId)`
+- `searchSMS(customerId, filters)`
+
+#### CustomerService Methods
+- `getCustomerProfile(customerId)`
+- `updateCustomerProfile(customerData)`
+- `getCustomerSMSHistory(customerId)`
+
+#### AdminService Methods
+- `getAllCustomers()`
+- `getCustomerById(customerId)`
+- `addCustomer(customerData)`
+- `updateCustomer(customerData)`
+- `deleteCustomer(customerId)`
+- `getCustomerStatistics()`
+
+#### VerificationService Methods
+- `generateVerificationCode()`
+- `sendVerificationSMS(phoneNumber)`
+- `validateVerificationCode(userId, code)`
+
+---
+
+### 7.4 Data Access Layer (DAO Classes)
+
+DAO classes are responsible for interacting with the database.
+
+| DAO Class | Methods |
+|-----------|---------|
+| **UserDAO** | `findByUsername()`, `findById()`, `saveUser()`, `updateUser()` |
+| **CustomerDAO** | `getCustomerById()`, `saveCustomer()`, `updateCustomer()`, `deleteCustomer()`, `getAllCustomers()` |
+| **SMSDAO** | `saveSMS()`, `deleteSMS()`, `findSMSByCustomer()`, `searchSMS()` |
+| **VerificationDAO** | `saveCode()`, `findValidCode()`, `markCodeUsed()` |
+
+---
+
+### 7.5 Utility Classes
+
+#### TwilioService
+
+Handles all integration with the Twilio SMS API.
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `accountSID` | String | Twilio Account SID |
+| `authToken` | String | Twilio Auth Token |
+
+**Methods:**
+- `sendSMS(from, to, body)`
+- `sendVerificationSMS(phoneNumber, code)`
+
+---
+
+## 8. Database Design (ERD)
+
+The database follows **Third Normal Form (3NF)** — no repeated groups, no unnecessary duplication, clean separation of concerns.
+
+---
+
+### 8.1 Tables Overview
+
+| # | Table | Purpose |
+|---|-------|---------|
+| 1 | `roles` | Stores user types (Admin / Customer) |
+| 2 | `users` | Stores login credentials for all users |
+| 3 | `customer_profiles` | Stores detailed customer & Twilio info |
+| 4 | `account_verifications` | Stores OTP codes for phone verification |
+| 5 | `sms_messages` | Stores all SMS records (core business table) |
+| 6 | `sms_history_deleted` | *(Optional)* Archive of deleted SMS records |
+| 7 | `login_audit` | *(Optional)* Login activity log for security |
+
+---
+
+### 8.2 Table Definitions
+
+####  roles
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `role_id` | INT (PK) | Role identifier |
+| `role_name` | VARCHAR(50) | Role name: Admin / Customer |
+
+---
+
+####  users
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `user_id` | INT (PK) | Unique user ID |
+| `username` | VARCHAR(100) UNIQUE | Login username |
+| `password_hash` | VARCHAR(255) | Hashed password |
+| `role_id` | INT (FK → roles) | User role |
+| `is_verified` | BOOLEAN | Phone number verified? |
+| `is_active` | BOOLEAN | Account active? |
+| `created_at` | TIMESTAMP | Account creation date |
+| `updated_at` | TIMESTAMP | Last update date |
+
+---
+
+####  customer_profiles
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `customer_id` | INT (PK) | Customer profile ID |
+| `user_id` | INT (FK → users, UNIQUE) | Linked user account |
+| `full_name` | VARCHAR(150) | Full name |
+| `birth_date` | DATE | Birthday |
+| `phone_number` | VARCHAR(20) | MSISDN |
+| `job_title` | VARCHAR(100) | Job title |
+| `email` | VARCHAR(150) | Email address |
+| `address` | TEXT | Physical address |
+| `twilio_account_sid` | VARCHAR(255) | Twilio Account SID |
+| `twilio_auth_token` | VARCHAR(255) | Twilio Auth Token |
+| `twilio_sender_id` | VARCHAR(50) | Twilio Sender Phone Number |
+
+---
+
+####  account_verifications
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `verification_id` | INT (PK) | Verification record ID |
+| `user_id` | INT (FK → users) | Related user |
+| `verification_code` | VARCHAR(10) | Random OTP code |
+| `sent_to` | VARCHAR(20) | Phone number code was sent to |
+| `sent_at` | TIMESTAMP | When code was sent |
+| `expires_at` | TIMESTAMP | Code expiry time |
+| `is_used` | BOOLEAN | Whether code was used |
+| `verified_at` | TIMESTAMP NULL | Verification success timestamp |
+
+---
+
+####  sms_messages *(Core Business Table)*
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `sms_id` | INT (PK) | Unique SMS ID |
+| `customer_id` | INT (FK → customer_profiles) | Customer who sent the SMS |
+| `from_number` | VARCHAR(50) | Sender number (Twilio Sender ID) |
+| `to_number` | VARCHAR(20) | Recipient number |
+| `sms_body` | TEXT | Message content |
+| `twilio_message_sid` | VARCHAR(100) | Twilio returned message SID |
+| `status` | VARCHAR(50) | Sent / Failed / Delivered / Queued |
+| `sent_at` | TIMESTAMP | Date/time of sending |
+| `is_deleted` | BOOLEAN | Soft delete flag |
+
+---
+
+####  sms_history_deleted *(Optional — Professional Design)*
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `deleted_id` | INT (PK) | Archive record ID |
+| `sms_id` | INT (FK → sms_messages) | Original SMS reference |
+| `customer_id` | INT (FK → customer_profiles) | Customer who deleted it |
+| `deleted_at` | TIMESTAMP | Delete timestamp |
+
+---
+
+####  login_audit *(Optional — Security & Tracking)*
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `audit_id` | INT (PK) | Audit record ID |
+| `user_id` | INT (FK → users) | Related user |
+| `login_time` | TIMESTAMP | Login timestamp |
+| `logout_time` | TIMESTAMP NULL | Logout timestamp |
+| `ip_address` | VARCHAR(50) | Client IP address |
+| `login_status` | VARCHAR(20) | Success / Failed |
+
+---
+
+### 8.3 Relationships Summary
+
+| Relationship | Cardinality | Description |
+|-------------|-------------|-------------|
+| `roles` → `users` | **1 : M** | One role assigned to many users |
+| `users` → `customer_profiles` | **1 : 1** | Each customer user has one profile |
+| `users` → `account_verifications` | **1 : M** | A user may attempt verification multiple times |
+| `customer_profiles` → `sms_messages` | **1 : M** | One customer sends many SMS messages |
+| `sms_messages` → `sms_history_deleted` | **1 : 0..1** | An SMS may have one deletion record |
+| `users` → `login_audit` | **1 : M** | One user has many login records |
+
+---
+
+### 8.4 ERD Diagram
+
+```
+┌──────────────┐
+│    roles     │
+├──────────────┤
+│ PK role_id   │
+│ role_name    │
+└──────┬───────┘
+       │ 1
+       │
+       │ M
+┌──────▼────────────┐         ┌──────────────────────┐
+│      users        │ 1     M │  account_verifications│
+├───────────────────┤─────────┤──────────────────────┤
+│ PK user_id        │         │ PK verification_id   │
+│ username          │         │ FK user_id           │
+│ password_hash     │         │ verification_code    │
+│ FK role_id        │         │ sent_to              │
+│ is_verified       │         │ sent_at              │
+│ is_active         │         │ expires_at           │
+│ created_at        │         │ is_used              │
+│ updated_at        │         │ verified_at          │
+└──────┬────────────┘         └──────────────────────┘
+       │ 1
+       │
+       │ 1
+┌──────▼──────────────────┐
+│    customer_profiles    │
+├─────────────────────────┤
+│ PK customer_id          │
+│ FK user_id (UNIQUE)     │
+│ full_name               │
+│ birth_date              │
+│ phone_number            │
+│ job_title               │
+│ email                   │
+│ address                 │
+│ twilio_account_sid      │
+│ twilio_auth_token       │
+│ twilio_sender_id        │
+└──────┬──────────────────┘
+       │ 1
+       │
+       │ M
+┌──────▼──────────────────┐         ┌──────────────────────┐
+│      sms_messages       │ 1   0..1│  sms_history_deleted │
+├─────────────────────────┤─────────┤──────────────────────┤
+│ PK sms_id               │         │ PK deleted_id        │
+│ FK customer_id          │         │ FK sms_id            │
+│ from_number             │         │ FK customer_id       │
+│ to_number               │         │ deleted_at           │
+│ sms_body                │         └──────────────────────┘
+│ twilio_message_sid      │
+│ status                  │
+│ sent_at                 │
+│ is_deleted              │
+└─────────────────────────┘
+```
+
+---
+
+### 8.5 Admin Statistics Query
+
+The Administrator statistics page is powered by this query:
+
+```sql
+SELECT
+    cp.full_name,
+    u.username,
+    COUNT(s.sms_id) AS total_sms_sent
+FROM customer_profiles cp
+JOIN users u ON cp.user_id = u.user_id
+LEFT JOIN sms_messages s ON cp.customer_id = s.customer_id
+GROUP BY cp.full_name, u.username;
+```
+
+---
+
+### 8.6 Minimum Required Tables (for Submission)
+
+If only the core tables are required, the following 5 tables are sufficient to fully implement the project:
+
+```
+roles (1) ──────── (M) users
+users (1) ──────── (1) customer_profiles
+users (1) ──────── (M) account_verifications
+customer_profiles (1) ──────── (M) sms_messages
+```
+
+---
+
+## 9. Future Enhancements
+
+| # | Enhancement |
+|---|-------------|
+| 1 |  SMS delivery reports |
+| 2 |  Two-factor authentication (2FA) |
+| 3 |  SMS scheduling |
+| 4 |  Bulk SMS sending |
+| 5 |  Mobile application support |
+| 6 |  Inbound SMS support via Twilio Callback URL |
+| 7 |  Export SMS history to CSV / Excel |
+
+---
+
+##  Project Status
 
 >  **In Development**
 
----
 
-*This SRS was written following the IEEE 830-1998 standard for Software Requirements Specifications.*
+
+*This SRS was prepared in accordance with the **IEEE 830-1998** Standard for Software Requirements Specifications.*
