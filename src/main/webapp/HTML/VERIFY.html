@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Verify Account — Twilio SMS Client</title>
+        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../CSS/VERIFY.css">
+    </head>
+    <body>
+
+        <!-- Background -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+        <div class="bg-blob blob-4"></div>
+        <div class="bg-blob blob-5"></div>
+        <div class="bg-blob blob-streak"></div>
+        <div class="particle-field" id="particleField"></div>
+
+        <!-- SUCCESS OVERLAY -->
+        <div class="success-overlay" id="successOverlay">
+            <div class="success-box" style="position:relative;">
+                <div class="success-anim">
+                    <div class="s-ring"></div>
+                    <div class="s-ring"></div>
+                    <div class="s-inner">
+                        <svg viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path class="check-path" d="M8 20l8 9 16-17"/>
+                        </svg>
+                    </div>
+                    <div class="confetti-wrap" id="confettiWrap"></div>
+                </div>
+                <div class="success-title">Account Activated! 🎉</div>
+                <div class="success-sub">Your account is verified and ready. Redirecting to your Customer Dashboard…</div>
+                <div class="redirect-bar"><div class="redirect-fill"></div></div>
+                <div class="redirect-label">Taking you to your dashboard →</div>
+            </div>
+        </div>
+
+        <!-- NAV -->
+        <nav>
+            <a href="../HTML/HOME.html" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 4H2a1 1 0 00-1 1v8a1 1 0 001 1h12l3 2V5a1 1 0 00-1-1z"/>
+                    </svg>
+                </div>
+                Twilio SMS
+            </a>
+            <span class="nav-hint">Back to <a href="../HTML/LOGIN.html">Login</a></span>
+        </nav>
+
+        <!-- STEPS -->
+        <div class="progress-bar-wrap">
+            <div class="steps-row">
+                <div class="step-item done">
+                    <div class="step-circle done">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 6l3 3 5-5"/></svg>
+                    </div>
+                    <span class="step-label">Registration</span>
+                </div>
+                <div class="step-connector"><div class="step-connector-fill" style="width:100%;"></div></div>
+                <div class="step-item active">
+                    <div class="step-circle active" id="step2Circle">2</div>
+                    <span class="step-label">Verification</span>
+                </div>
+                <div class="step-connector"><div class="step-connector-fill" id="conn2"></div></div>
+                <div class="step-item">
+                    <div class="step-circle" id="step3Circle">3</div>
+                    <span class="step-label">Dashboard</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE -->
+        <div class="page-wrapper">
+            <div class="verify-card">
+
+                <!-- Icon -->
+                <div class="icon-area">
+                    <div class="phone-icon-wrap">
+                        <div class="phone-ring"></div>
+                        <div class="phone-ring"></div>
+                        <div class="phone-ring"></div>
+                        <div class="phone-icon-inner">
+                            <svg viewBox="0 0 34 34" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="7" y="2" width="20" height="30" rx="3"/>
+                            <path d="M13 6h8M17 26v.5"/>
+                            <path d="M12 14l3 3 7-7" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h1 class="verify-title">Check your phone</h1>
+                    <p class="verify-desc">
+                        We sent a 6-digit verification code via SMS to your registered number. Enter it below to activate your account.
+                    </p>
+                </div>
+
+                <!-- SMS sent strip -->
+                <div class="sms-strip">
+                    <div class="sms-dot"></div>
+                    <span>SMS sent via your Twilio account</span>
+                    <div class="sms-strip-badge">Just now</div>
+                </div>
+
+                <!-- OTP -->
+                <label class="otp-label">Enter 6-digit verification code</label>
+                <div class="otp-group">
+                    <input class="otp-input" id="otp0" type="text" inputmode="numeric" maxlength="1" placeholder="·" autocomplete="one-time-code">
+                    <input class="otp-input" id="otp1" type="text" inputmode="numeric" maxlength="1" placeholder="·">
+                    <input class="otp-input" id="otp2" type="text" inputmode="numeric" maxlength="1" placeholder="·">
+                    <span class="otp-sep">—</span>
+                    <input class="otp-input" id="otp3" type="text" inputmode="numeric" maxlength="1" placeholder="·">
+                    <input class="otp-input" id="otp4" type="text" inputmode="numeric" maxlength="1" placeholder="·">
+                    <input class="otp-input" id="otp5" type="text" inputmode="numeric" maxlength="1" placeholder="·">
+                </div>
+
+                <!-- Message area -->
+                <div class="msg-wrap">
+                    <div class="msg msg-error" id="msgError">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.8" stroke-linecap="round">
+                        <circle cx="7.5" cy="7.5" r="6"/><path d="M7.5 5v3M7.5 10v.3"/>
+                        </svg>
+                        <span id="msgErrorText">Invalid verification code. Please try again.</span>
+                    </div>
+                    <div class="msg msg-success" id="msgSuccess">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.8" stroke-linecap="round">
+                        <circle cx="7.5" cy="7.5" r="6"/><path d="M5 7.5l2 2 3-3"/>
+                        </svg>
+                        <span>Code verified! Activating your account…</span>
+                    </div>
+                </div>
+
+                <!-- Verify Button -->
+                <button class="btn-verify" id="verifyBtn" onclick="handleVerify()">
+                    <span class="btn-label">
+                        Verify Account
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 8h10M9 4l4 4-4 4"/>
+                        </svg>
+                    </span>
+                    <div class="spinner"></div>
+                </button>
+
+                <!-- Back -->
+                <a href="../HTML/LOGIN.html" class="btn-back">
+                    <svg viewBox="0 0 14 14" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 7H3M7 3l-4 4 4 4"/>
+                    </svg>
+                    Back to Login
+                </a>
+
+            </div>
+        </div>
+
+        <script src="../JS/VERIFY.js">
+        
+        </script>
+    </body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Dashboard — Twilio SMS Client</title>
+        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href ="../CSS/ADMIN.css" > 
+    </head>
+    <body>
+
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+
+        <!-- ── SIDEBAR ── -->
+        <aside class="sidebar">
+            <a href="../HTML/HOME.html" class="sidebar-logo">
+                <div class="s-logo-icon">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 4H2a1 1 0 00-1 1v10a1 1 0 001 1h14l4 3V5a1 1 0 00-1-1z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="s-logo-text">Twilio SMS</div>
+                    <span class="s-logo-sub">Admin Portal</span>
+                </div>
+            </a>
+
+            <div class="sidebar-user">
+                <div class="user-avatar">AD</div>
+                <div>
+                    <div class="user-name">Administrator</div>
+                    <div class="user-role">
+                        <svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 1l1.5 2.5 2.5.4-1.8 1.8.4 2.5L5 7l-2.6 1.2.4-2.5L1 3.9l2.5-.4z"/>
+                        </svg>
+                        System Administrator
+                    </div>
+                </div>
+                <div class="admin-dot"></div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Administration</div>
+
+                <a href="../HTML/ADMIN.html" class="nav-item active">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="1" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="1" width="5.5" height="5.5" rx="1.2"/>
+                        <rect x="1" y="8.5" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2"/>
+                        </svg>
+                    </div>
+                    Dashboard
+                </a>
+
+                <a href="manage-customers.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="5.5" cy="5" r="2.5"/><path d="M1 13c0-2.8 2-4.5 4.5-4.5S10 10.2 10 13"/>
+                        <path d="M11 7l2 2 2-2M13 5v4"/>
+                        </svg>
+                    </div>
+                    Manage Customers
+                </a>
+
+                <a href="add-customer.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="6" cy="5" r="2.5"/><path d="M1 13c0-2.8 2-4.5 5-4.5s5 1.7 5 4.5"/>
+                        <path d="M11.5 2v5M9 4.5h5"/>
+                        </svg>
+                    </div>
+                    Add New Customer
+                </a>
+
+                <a href="customer-statistics.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 13L5 8l3 3 3-5 3 3"/>
+                        <rect x="1" y="1" width="13" height="12" rx="1.5"/>
+                        </svg>
+                    </div>
+                    Customer Statistics
+                </a>
+
+                <div style="flex:1;"></div>
+
+                <a href="../HTML/LOGIN.html" class="nav-item logout">
+                    <div class="nav-icon" style="background:rgba(232,23,60,0.06);">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 7.5H3M7 4.5l-3 3 3 3"/><path d="M6 2H13.5V13H6"/>
+                        </svg>
+                    </div>
+                    Logout
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="admin-badge">
+                    <div class="admin-badge-dot"></div>
+                    Admin Access · Full Control
+                </div>
+            </div>
+        </aside>
+
+        <!-- ── MAIN ── -->
+        <main class="main">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <div class="topbar-title">Administrator Dashboard</div>
+                    <div class="topbar-sub">Full system overview and management</div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-time" id="clock"></div>
+                    <div class="topbar-avatar">AD</div>
+                </div>
+            </div>
+
+            <div class="page-body">
+
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <div class="welcome-banner-bg"></div>
+                    <div class="welcome-text">
+                        <div class="welcome-greeting">System Administrator</div>
+                        <div class="welcome-name">Welcome, <span>Admin</span> <div class="crown-icon" style="display: inline-block; text-align: center">
+                            <svg viewBox="0 0 16 16" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 13l1.5-7 3.5 4L8 3l2 7 3.5-4L15 13H1z"/>
+                            </svg>
+                        </div></div>
+                        <div class="welcome-sub">Full control over all customers, SMS activity, and system settings</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;flex-shrink:0;">
+                        <div class="admin-crown">
+                            <svg viewBox="0 0 13 13" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 10l1.5-6 3 4L6.5 3 8 8l3-4 1.5 6H1z"/>
+                            </svg>
+                            Administrator
+                        </div>
+                        <div class="welcome-date" id="welcomeDate"></div>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-bg" style="background:radial-gradient(circle,rgba(245,158,11,0.15),transparent);"></div>
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 18 18" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="7" cy="6" r="3"/><path d="M1 17c0-3.8 2.7-6.5 6-6.5s6 2.7 6 6.5"/>
+                            <path d="M13 8l3 3-3 3M16 11h-5"/>
+                            </svg>
+                        </div>
+                        <div class="stat-label">Total Customers</div>
+                        <div class="stat-value">84</div>
+                       
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-bg" style="background:radial-gradient(circle,rgba(59,130,246,0.12),transparent);"></div>
+                        <div class="stat-icon" style="background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.2);">
+                            <svg viewBox="0 0 18 18" fill="none" stroke="#60a5fa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 3H2a1 1 0 00-1 1v9a1 1 0 001 1h12l3 2V4a1 1 0 00-1-1z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-label">Total SMS in System</div>
+                        <div class="stat-value" style="color:#60a5fa;">48,392</div>
+
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-bg" style="background:radial-gradient(circle,rgba(245,158,11,0.12),transparent);"></div>
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 18 18" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 1l2 4.5 5 .7-3.6 3.5.8 5L9 12.3 4.8 14.7l.8-5L2 6.2l5-.7z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-label">Most Active Customer</div>
+                        <div class="stat-value" style="font-size:1.05rem;margin-top:0.3rem;">Sarah K.</div>
+                        
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="section-header">
+                    <div>
+                        <div class="section-title">Admin Actions</div>
+                        <div class="section-sub">Manage and monitor the entire system</div>
+                    </div>
+                </div>
+
+                <div class="actions-grid">
+                    <a href="manage-customers.html" class="action-card ac-gold">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 20 20" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="7" cy="6" r="3.5"/><path d="M1 18c0-3.8 2.7-6 6-6s6 2.2 6 6"/>
+                            <path d="M15 10l3.5 3.5L15 17M18.5 13.5h-6"/>
+                            </svg>
+                        </div>
+                        <div class="action-label">Manage Customers</div>
+                        <div class="action-desc">View, edit, activate or deactivate any customer account in the system</div>
+                        <div class="action-arrow">Open manager <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+                    </a>
+
+                    <a href="add-customer.html" class="action-card ac-red">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 20 20" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="6" r="3.5"/><path d="M1 18c0-3.8 2.7-6 7-6s7 2.2 7 6"/>
+                            <path d="M15 4h5M17.5 1.5v5"/>
+                            </svg>
+                        </div>
+                        <div class="action-label">Add New Customer</div>
+                        <div class="action-desc">Register a new customer account directly from the admin panel</div>
+                        <div class="action-arrow">Add customer <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+                    </a>
+
+                    <a href="customer-statistics.html" class="action-card ac-blue">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 20 20" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 16L7 9l4 4 4-6 3 3"/>
+                            <rect x="2" y="2" width="16" height="14" rx="2"/>
+                            </svg>
+                        </div>
+                        <div class="action-label">Customer Statistics</div>
+                        <div class="action-desc">Detailed analytics on usage, delivery rates, and customer activity</div>
+                        <div class="action-arrow">View stats <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+                    </a>
+                </div>
+            </div><!-- /page-body -->
+        </main>
+
+        <script src = "../JS/ADMIN.js" ></script>
+    </body>
+</html>
