@@ -1,17 +1,33 @@
 package DB_PK;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DB 
 {
-    private static final String URL = "jdbc:postgresql://ep-steep-darkness-agtl36wb-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require";
+    private static String url;
+    private static String user;
+    private static String password;
 
-    private static final String USER = "neondb_owner";
-
-    private static final String PASSWORD = "npg_XemnQviIcb41";
+    static {
+        Properties props = new Properties();
+        try (InputStream is = DB.class.getClassLoader().getResourceAsStream("db.properties")) {
+            if (is == null) {
+                throw new RuntimeException("db.properties file not found in resources!");
+            }
+            props.load(is);
+            url = props.getProperty("db.url");
+            user = props.getProperty("db.username");
+            password = props.getProperty("db.password");
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load db.properties", e);
+        }
+    }
     
     public static Connection getConnection() throws ClassNotFoundException 
     {
@@ -21,9 +37,9 @@ public class DB
 
             Connection con =
                     DriverManager.getConnection(
-                            URL,
-                            USER,
-                            PASSWORD
+                            url,
+                            user,
+                            password
                     );
             return con;
         } catch (SQLException e) 
