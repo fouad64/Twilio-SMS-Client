@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add New Customer — Twilio SMS Client</title>
+        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../CSS/ADMIN.css">
+        <link rel="stylesheet" href="../CSS/AddNewCustomer.css">
+    </head>
+    <body>
+
+        <!-- Background Blobs from Admin Dashboard -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+
+        <!-- Hidden particle field for SIGNUP.js to avoid JS error, styled-away in CSS -->
+        <div class="particle-field" id="particleField"></div>
+
+        <!-- ── SIDEBAR ── -->
+        <aside class="sidebar">
+            <a href="../HTML/HOME.html" class="sidebar-logo">
+                <div class="s-logo-icon">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 4H2a1 1 0 00-1 1v10a1 1 0 001 1h14l4 3V5a1 1 0 00-1-1z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="s-logo-text">Twilio SMS</div>
+                    <span class="s-logo-sub">Admin Portal</span>
+                </div>
+            </a>
+
+            <div class="sidebar-user">
+                <div class="user-avatar">AD</div>
+                <div>
+                    <div class="user-name">Administrator</div>
+                    <div class="user-role">
+                        <svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 1l1.5 2.5 2.5.4-1.8 1.8.4 2.5L5 7l-2.6 1.2.4-2.5L1 3.9l2.5-.4z"/>
+                        </svg>
+                        System Administrator
+                    </div>
+                </div>
+                <div class="admin-dot"></div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Administration</div>
+
+                <a href="../HTML/ADMIN.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="1" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="1" width="5.5" height="5.5" rx="1.2"/>
+                        <rect x="1" y="8.5" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2"/>
+                        </svg>
+                    </div>
+                    Dashboard
+                </a>
+
+                <a href="manage-customers.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="5.5" cy="5" r="2.5"/><path d="M1 13c0-2.8 2-4.5 4.5-4.5S10 10.2 10 13"/>
+                        <path d="M11 7l2 2 2-2M13 5v4"/>
+                        </svg>
+                    </div>
+                    Manage Customers
+                </a>
+
+                <a href="add-customer.html" class="nav-item active">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="6" cy="5" r="2.5"/><path d="M1 13c0-2.8 2-4.5 5-4.5s5 1.7 5 4.5"/>
+                        <path d="M11.5 2v5M9 4.5h5"/>
+                        </svg>
+                    </div>
+                    Add New Customer
+                </a>
+
+                <div style="flex:1;"></div>
+
+                <a href="../HTML/LOGIN.html" class="nav-item logout">
+                    <div class="nav-icon" style="background:rgba(232,23,60,0.06);">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 7.5H3M7 4.5l-3 3 3 3"/><path d="M6 2H13.5V13H6"/>
+                        </svg>
+                    </div>
+                    Logout
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="admin-badge">
+                    <div class="admin-badge-dot"></div>
+                    Admin Access · Full Control
+                </div>
+            </div>
+        </aside>
+
+        <!-- ── MAIN ── -->
+        <main class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <div class="topbar-title">Add New Customer</div>
+                    <div class="topbar-sub">Register a new customer account directly from the admin panel</div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-time" id="clock"></div>
+                    <div class="topbar-avatar">AD</div>
+                </div>
+            </div>
+
+            <!-- PAGE BODY -->
+            <div class="page-body">
+
+                <!-- Welcome/Header Banner -->
+                <div class="welcome-banner">
+                    <div class="welcome-banner-bg"></div>
+                    <div class="welcome-text">
+                        <div class="welcome-greeting">Administration</div>
+                        <div class="welcome-name">Add New <span>Customer</span></div>
+                        <div class="welcome-sub">Fill in the details below to register a customer account with Twilio SMS Client</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;flex-shrink:0;">
+                        <div class="admin-crown">
+                            <svg viewBox="0 0 13 13" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 10l1.5-6 3 4L6.5 3 8 8l3-4 1.5 6H1z"/>
+                            </svg>
+                            Administrator
+                        </div>
+                        <div class="welcome-date" id="welcomeDate"></div>
+                    </div>
+                </div>
+
+                <!-- Error Banner -->
+                <div class="error-banner" id="errorBanner">
+                    <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="8" cy="8" r="6.5"/><path d="M8 5v3M8 10v.5"/>
+                    </svg>
+                    <div>
+                        <div style="font-weight:500;margin-bottom:0.3rem;">Please fix the following:</div>
+                        <ul class="error-list" id="errorList"></ul>
+                    </div>
+                </div>
+
+                <!-- FORM CARD -->
+                <div class="form-card">
+                    <form id="signupForm">
+
+                        <!-- ── SECTION 1: Personal Info ── -->
+                        <div class="section-title">
+                            <div class="section-icon">
+                                <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="7.5" cy="4.5" r="3"/><path d="M1 14c0-3.6 2.9-6.5 6.5-6.5S14 10.4 14 14"/>
+                                </svg>
+                            </div>
+                            <span class="section-name">Personal Information</span>
+                            <span class="section-desc">Required fields marked with ·</span>
+                        </div>
+
+                        <div class="fields-grid">
+                            <!-- Full Name -->
+                            <div class="field-group field-full">
+                                <label class="field-label" for="fullName">Full Name <span class="required-dot">·</span></label>
+                                <div class="field-wrap">
+                                    <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="4.5" r="3"/><path d="M1 14c0-3.6 2.9-6.5 6.5-6.5S14 10.4 14 14"/></svg></span>
+                                    <input class="field-input" id="fullName" name="fullName" type="text" placeholder="e.g. John Doe" oninput="liveValidate('fullName')">
+                                    <span class="field-tick" id="fullNameTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                    <div class="field-error" id="fullNameError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="fullNameMsg">Full name is required</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Date of Birth -->
+                            <div class="field-group">
+                                <label class="field-label" for="dob">Date of Birth <span class="required-dot">·</span></label>
+                                <div class="field-wrap">
+                                    <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2.5" width="13" height="12" rx="1.5"/><path d="M5 1v3M10 1v3M1 7h13"/></svg></span>
+                                    <input class="field-input" name="dob" id="dob" type="date" oninput="liveValidate('dob')" style="color-scheme:dark;">
+                                    <span class="field-tick" id="dobTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                    <div class="field-error" id="dobError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="dobMsg">Date of birth is required</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Job Title -->
+                            <div class="field-group">
+                                <label class="field-label" for="jobTitle">Job Title <span class="required-dot">·</span></label>
+                                <div class="field-wrap">
+                                    <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="13" height="9" rx="1.5"/><path d="M5 5V3.5a2.5 2.5 0 015 0V5"/></svg></span>
+                                    <input class="field-input" name="jobTitle" id="jobTitle" type="text" placeholder="e.g. Software Engineer" oninput="liveValidate('jobTitle')">
+                                    <span class="field-tick" id="jobTitleTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                    <div class="field-error" id="jobTitleError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="jobTitleMsg">Job title is required</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="field-group">
+                                <label class="field-label" for="email">Email Address <span class="required-dot">·</span></label>
+                                <div class="field-wrap">
+                                    <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="13" height="9" rx="1.5"/><path d="M1 6l6.5 4.5L14 6"/></svg></span>
+                                    <input class="field-input" name="email" id="email" type="text" placeholder="john@example.com" oninput="liveValidate('email')">
+                                    <span class="field-tick" id="emailTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                    <div class="field-error" id="emailError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="emailMsg">Valid email is required</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="field-group">
+                                <label class="field-label" for="phone">Phone Number (MSISDN) <span class="required-dot">·</span></label>
+                                <div class="field-wrap">
+                                    <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="1" width="8" height="13" rx="1.5"/><path d="M6.5 11.5h2"/></svg></span>
+                                    <input class="field-input" name="phone" id="phone" type="text" placeholder="+20 1126165494" oninput="liveValidate('phone')">
+                                    <span class="field-tick" id="phoneTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                    <div class="field-error" id="phoneError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="phoneMsg">Valid phone number required (e.g. +1234567890)</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Home Address -->
+                            <div class="field-group field-full">
+                                <label class="field-label" for="address">Home Address <span class="required-dot">·</span></label>
+                                <div class="field-wrap">
+                                    <span class="field-icon" style="top:18px;transform:none;"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1L1 7h2v7h3v-4h3v4h3V7h2z"/></svg></span>
+                                    <input class="field-input" name="address" id="address" type="text" placeholder="123 Main St, City, Country" oninput="liveValidate('address')" style="padding-left:2.6rem;">
+                                    <span class="field-tick" id="addressTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                    <div class="field-error" id="addressError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="addressMsg">Home address is required</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ── SECTION 2: Account Security ── -->
+                        <div class="section-title">
+                            <div class="section-icon">
+                                <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2.5" y="6.5" width="10" height="8" rx="1.5"/><path d="M5 6.5V4.5a2.5 2.5 0 015 0v2"/>
+                                </svg>
+                            </div>
+                            <span class="section-name">Account Security</span>
+                            <span class="section-desc">Choose a strong password</span>
+                        </div>
+
+                        <div class="fields-grid">
+                            <!-- Username -->
+                            <div class="field-group">
+                                <label class="field-label" for="username">Username <span class="required-dot">·</span></label>
+                                <div class="field-wrap">
+                                    <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="4.5" r="3"/><path d="M1 14c0-3.6 2.9-6.5 6.5-6.5S14 10.4 14 14"/></svg></span>
+                                    <input class="field-input" name="username" id="username" type="text" placeholder="e.g. john_doe" oninput="liveValidate('username')" autocomplete="username">
+                                    <span class="field-tick" id="usernameTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                    <div class="field-error" id="usernameError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="usernameMsg">Username is required</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Spacer -->
+                            <div></div>
+
+                            <!-- Password -->
+                            <div class="field-group">
+                                <label class="field-label" for="password">Password <span class="required-dot">·</span></label>
+                                <div class="field-wrap">
+                                    <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="10" height="8" rx="1.5"/><path d="M5 6.5V4.5a2.5 2.5 0 015 0v2"/></svg></span>
+                                    <input class="field-input" name="password" id="password" type="password" placeholder="Min. 8 characters" oninput="onPasswordInput()" autocomplete="new-password">
+                                    <button class="eye-btn" type="button" onclick="togglePw('password', 'eye1')" aria-label="Toggle password">
+                                        <svg id="eye1" viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7.5s2.5-5 6.5-5 6.5 5 6.5 5-2.5 5-6.5 5-6.5-5-6.5-5z"/><circle cx="7.5" cy="7.5" r="2"/></svg>
+                                    </button>
+                                    <div class="field-error" id="passwordError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="passwordMsg">Password is required</span></div>
+                                </div>
+                                <div class="pw-strength" id="pwStrength">
+                                    <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+                                    <span class="strength-label" id="strengthLabel">Strength: Weak</span>
+                                </div>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="field-group">
+                                <label class="field-label" for="confirmPassword">Confirm Password <span class="required-dot">·</span></label>
+                                <div class="field-wrap">
+                                    <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="10" height="8" rx="1.5"/><path d="M5 6.5V4.5a2.5 2.5 0 015 0v2"/><path d="M5 10l2 2 3.5-3.5"/></svg></span>
+                                    <input class="field-input" id="confirmPassword" type="password" placeholder="Re-enter password" oninput="liveValidate('confirmPassword')" autocomplete="new-password">
+                                    <button class="eye-btn" type="button" onclick="togglePw('confirmPassword', 'eye2')" aria-label="Toggle confirm password">
+                                        <svg id="eye2" viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7.5s2.5-5 6.5-5 6.5 5 6.5 5-2.5 5-6.5 5-6.5-5-6.5-5z"/><circle cx="7.5" cy="7.5" r="2"/></svg>
+                                    </button>
+                                    <span class="field-tick" id="confirmPasswordTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                    <div class="field-error" id="confirmPasswordError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="confirmPasswordMsg">Passwords do not match</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ── SECTION 3: Twilio Credentials ── -->
+                        <div class="twilio-section">
+                            <div class="section-title">
+                                <div class="section-icon">
+                                    <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="7.5" cy="7.5" r="6.5"/><path d="M7.5 4v3.5l2.5 1.5"/>
+                                    </svg>
+                                </div>
+                                <span class="section-name">Twilio Credentials</span>
+                                <span class="section-desc">From your Twilio Console</span>
+                            </div>
+
+                            <div class="fields-grid">
+                                <!-- Account SID -->
+                                <div class="field-group field-full">
+                                    <label class="field-label" for="twilioSid">Twilio Account SID <span class="required-dot">·</span></label>
+                                    <div class="field-wrap">
+                                        <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="13" height="9" rx="1.5"/><path d="M4 6.5h7M4 9h4"/></svg></span>
+                                        <input class="field-input" name="twilioSid" id="twilioSid" type="text" placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" oninput="liveValidate('twilioSid')" style="font-family:monospace;font-size:0.8rem;letter-spacing:0.02em;">
+                                        <span class="field-tick" id="twilioSidTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                        <div class="field-error" id="twilioSidError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="twilioSidMsg">Account SID is required (starts with AC)</span></div>
+                                    </div>
+                                </div>
+
+                                <!-- Auth Token -->
+                                <div class="field-group">
+                                    <label class="field-label" for="twilioToken">Twilio Auth Token <span class="required-dot">·</span></label>
+                                    <div class="field-wrap">
+                                        <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="10" height="8" rx="1.5"/><path d="M5 6.5V4.5a2.5 2.5 0 015 0v2"/></svg></span>
+                                        <input class="field-input" name="twilioToken" id="twilioToken" type="password" placeholder="Your Twilio auth token" oninput="liveValidate('twilioToken')" style="font-family:monospace;font-size:0.8rem;">
+                                        <button class="eye-btn" type="button" onclick="togglePw('twilioToken', 'eye3')" aria-label="Toggle token">
+                                            <svg id="eye3" viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7.5s2.5-5 6.5-5 6.5 5 6.5 5-2.5 5-6.5 5-6.5-5-6.5-5z"/><circle cx="7.5" cy="7.5" r="2"/></svg>
+                                        </button>
+                                        <div class="field-error" id="twilioTokenError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="twilioTokenMsg">Auth token is required</span></div>
+                                    </div>
+                                </div>
+
+                                <!-- Sender ID -->
+                                <div class="field-group">
+                                    <label class="field-label" for="twilioSender">Allowed Sender ID <span class="required-dot">·</span></label>
+                                    <div class="field-wrap">
+                                        <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3H2a1 1 0 00-1 1v7a1 1 0 001 1h9l3 2V4a1 1 0 00-1-1z"/></svg></span>
+                                        <input class="field-input" name="twilioSender" id="twilioSender" type="text" placeholder="+1 662 495 7872" oninput="liveValidate('twilioSender')">
+                                        <span class="field-tick" id="twilioSenderTick"><svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg></span>
+                                        <div class="field-error" id="twilioSenderError"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg><span id="twilioSenderMsg">Sender ID is required</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ── ACTIONS ── -->
+                        <div class="form-actions">
+                            <a href="../HTML/ADMIN.html" class="btn-back">
+                                <svg viewBox="0 0 14 14" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7H3M7 3l-4 4 4 4"/></svg>
+                                Dashboard
+                            </a>
+                            <button type="button" class="btn-reset" onclick="handleReset()">
+                                <svg viewBox="0 0 14 14" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7a5 5 0 105-5H4M4 2L2 4l2 2"/></svg>
+                                Reset Form
+                            </button>
+                            <button type="button" class="btn-register" id="registerBtn" onclick="handleRegister()">
+                                <span class="btn-label">
+                                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M12 3h3M13.5 1.5v3"/></svg>
+                                    Create Customer
+                                </span>
+                                <div class="spinner"></div>
+                            </button>
+                        </div>
+                    </form>
+                </div><!-- /form-card -->
+
+            </div><!-- /page-body -->
+        </main>
+
+        <!-- Loading overlay -->
+        <div id="signupLoading" class="signup-loading-overlay">
+            <div class="signup-loading-card">
+                <div class="spinner"></div>
+                <h2>Creating Customer Account</h2>
+                <p>
+                    Please wait while we validate customer details,
+                    connect to Twilio, and send the verification code.
+                </p>
+            </div>
+        </div>
+
+        <script src="../JS/ADMIN.js"></script>
+        <script src="../JS/SIGNUP.js"></script>
+    </body>
+</html>
