@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 public class Customer extends User
 {
@@ -247,5 +250,28 @@ public class Customer extends User
         }
 
         return update_status;
+    }
+    
+    public static boolean sendSMS(String twilioSid ,String twilioToken , String twilioSender , String to_number ,String msg)
+    {
+        boolean SendingStatus = false;
+        try 
+        {
+            Twilio.init(twilioSid, twilioToken);
+            Message message = Message.creator(
+                    new PhoneNumber(to_number),
+                    new PhoneNumber(twilioSender),
+                    msg
+            ).create();
+            if (message.getSid() != null) 
+            {
+               SendingStatus = true;
+            } 
+        }
+        catch (Exception ex) 
+        {
+           ex.printStackTrace();
+        }
+        return SendingStatus;
     }
 }

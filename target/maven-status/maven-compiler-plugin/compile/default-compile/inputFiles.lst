@@ -3,6 +3,7 @@
 /home/zosama/TwilioSMS/src/main/java/CUSTOMER_PK/CustomerGetDataServlet.java
 /home/zosama/TwilioSMS/src/main/java/CUSTOMER_PK/CustomerGetParametersServlet.java
 /home/zosama/TwilioSMS/src/main/java/CUSTOMER_PK/CustomerParameters.java
+/home/zosama/TwilioSMS/src/main/java/CUSTOMER_PK/CustomerSendSmsServlet.java
 /home/zosama/TwilioSMS/src/main/java/DB_PK/DB.java
 /home/zosama/TwilioSMS/src/main/java/HELPER_PK/Helper.java
 /home/zosama/TwilioSMS/src/main/java/USERS_PK/User.java

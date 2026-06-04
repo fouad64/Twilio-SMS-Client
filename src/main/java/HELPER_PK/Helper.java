@@ -107,4 +107,32 @@ public class Helper
         }
         return customer;
     }
+    
+    public static int saveSMS(int customer_id , String twilioSenderID , String to_number , String smsBody, String twilio_message_sid , Connection con)
+    {
+        int sms_id = 0 ;
+        try
+        {
+            String sql = "select * from save_sms(?,?,?,?,?)";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, customer_id);
+            ps.setString(2, twilioSenderID);
+            ps.setString(3, to_number);
+            ps.setString(4, smsBody);
+            ps.setString(5, twilio_message_sid);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next())
+            {
+                sms_id = rs.getInt(1);
+            }
+        }
+        catch (Exception ex) 
+        {
+            ex.printStackTrace();
+        }
+        return sms_id;
+    }
 }
