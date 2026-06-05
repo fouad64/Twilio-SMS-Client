@@ -1,8 +1,11 @@
 DB_PK/DB.class
 USERS_PK/UserAccountVerifyServlet.class
+SMS_PK/SMSMessage.class
 CUSTOMER_PK/CustomerGetParametersServlet.class
 HELPER_PK/Helper.class
+SMS_PK/DeleteSmsServlet.class
 USERS_PK/UserRegisterServlet.class
+SMS_PK/GetAllSMSsByCustomerIDServlet.class
 CUSTOMER_PK/CustomerParameters.class
 CUSTOMER_PK/CustomerEditDataServlet.class
 CUSTOMER_PK/CustomerSendSmsServlet.class

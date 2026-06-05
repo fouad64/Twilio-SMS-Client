@@ -28,6 +28,14 @@
         <servlet-name>CustomerSendSmsServlet</servlet-name>
         <servlet-class>CUSTOMER_PK.CustomerSendSmsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetAllSMSsByCustomerIDServlet</servlet-name>
+        <servlet-class>SMS_PK.GetAllSMSsByCustomerIDServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteSmsServlet</servlet-name>
+        <servlet-class>SMS_PK.DeleteSmsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLoginServlet</servlet-name>
         <url-pattern>/UserLoginServlet</url-pattern>
@@ -51,6 +59,14 @@
     <servlet-mapping>
         <servlet-name>CustomerSendSmsServlet</servlet-name>
         <url-pattern>/CustomerSendSmsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAllSMSsByCustomerIDServlet</servlet-name>
+        <url-pattern>/GetAllSMSsByCustomerIDServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteSmsServlet</servlet-name>
+        <url-pattern>/DeleteSmsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

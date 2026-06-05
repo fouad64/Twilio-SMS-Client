@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Search SMS — Twilio SMS Client</title>
+        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        <link rel="stylesheet" href="../CSS/SEARCHSMS.css" >
+    </head>
+    <body>
+
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+
+        <!-- ── SIDEBAR ── -->
+        <aside class="sidebar">
+            <a href="../HTML/HOME.html" class="sidebar-logo">
+                <div class="s-logo-icon">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 4H2a1 1 0 00-1 1v10a1 1 0 001 1h14l4 3V5a1 1 0 00-1-1z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="s-logo-text">Twilio SMS</div>
+                    <span class="s-logo-sub">Customer Portal</span>
+                </div>
+            </a>
+            <div class="sidebar-user">
+                <div class="user-avatar" id="user-avatar">JD</div>
+                <div><div class="user-name" id="user-name">John Doe</div><div class="user-role">Customer Account</div></div>
+                <div class="online-dot"></div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Main</div>
+                <a href="../HTML/CUSTOMER.html" class="nav-item">
+                    <div class="nav-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="1" width="5.5" height="5.5" rx="1.2"/><rect x="1" y="8.5" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2"/></svg></div>
+                    Dashboard
+                </a>
+                <a href="../HTML/CUSTOMERPROFILE.html" class="nav-item">
+                    <div class="nav-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="5" r="3"/><path d="M1 14c0-3.6 2.9-6.5 6.5-6.5S14 10.4 14 14"/></svg></div>
+                    My Profile
+                </a>
+                <a href="../HTML/EDITPROFILECUSTOMER.html" class="nav-item">
+                    <div class="nav-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.5l2 2L5 12H3v-2l7.5-7.5z"/><path d="M9 4l2 2"/></svg></div>
+                    Edit Profile
+                </a>
+                <div class="nav-section-label">SMS</div>
+                <a href="../HTML/SENDSMS.html" class="nav-item">
+                    <div class="nav-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L1 7l5 2.5L13 2zM6 9.5L8.5 14 13 2"/></svg></div>
+                    Send SMS
+                </a>
+                <a href="sms-history.html" class="nav-item">
+                    <div class="nav-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="13" height="11" rx="1.5"/><path d="M4 6h7M4 9h5"/></svg></div>
+                    SMS History
+                </a>
+                <a href="../HTML/SEARCHSMS.html" class="nav-item active">
+                    <div class="nav-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14 14"/></svg></div>
+                    Search SMS
+                </a>
+                <div style="flex:1;"></div>
+                <a href="../HTML/LOGIN.html" class="nav-item logout">
+                    <div class="nav-icon" style="background:rgba(232,23,60,0.06);"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 7.5H3M7 4.5l-3 3 3 3"/><path d="M6 2H13.5V13H6"/></svg></div>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- ── MAIN ── -->
+        <main class="main">
+            <div class="topbar">
+                <div>
+                    <div class="topbar-title">Search SMS</div>
+                    <div class="topbar-sub">Find messages by recipient phone number</div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-time" id="clock"></div>
+                    <div class="topbar-avatar" id="topbar-avatar">JD</div>
+                </div>
+            </div>
+
+            <div class="page-body">
+
+                <!-- Header -->
+                <div class="page-header">
+                    <div class="header-badge"><span class="badge-dot"></span>SMS Search</div>
+                    <div class="header-title">Search Your Messages , <span id="span-fullname" style="color: #E8173C">Ziad</span></div>
+                    <div class="header-sub">Enter a recipient phone number to find all matching SMS records</div>
+                </div>
+
+                <!-- Search Card -->
+                <div class="search-card">
+                    <div class="search-row">
+
+                        <!-- Search input -->
+                        <div class="search-field-wrap">
+                            <label class="search-label" for="searchInput">
+                                <svg viewBox="0 0 13 13" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1" width="7" height="11" rx="1.2"/><path d="M5.5 9.5h2"/></svg>
+                                Recipient Phone Number (To)
+                            </label>
+                            <div class="search-input-wrap">
+                                <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="7" cy="7" r="5.5"/><path d="M11 11L14.5 14.5"/>
+                                </svg>
+                                <input
+                                    class="search-input"
+                                    id="searchInput"
+                                    type="text"
+                                    placeholder="e.g. +1 555 019 2847"
+                                    oninput="onSearchInput()"
+                                    onkeydown="if (event.key === 'Enter')
+                                                handleSearch()"
+                                    autocomplete="off"
+                                    >
+                                <button class="input-clear-btn" id="inputClearBtn" onclick="clearSearch()" title="Clear">
+                                    <svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2 2l6 6M8 2l-6 6"/></svg>
+                                </button>
+                            </div>
+                            <div class="search-error" id="searchError">
+                                <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg>
+                                <span id="searchErrorMsg">Please enter a phone number to search</span>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <button class="btn-search" id="searchBtn" onclick="handleSearch()">
+                            <span class="s-label">
+                                <svg viewBox="0 0 15 15" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14 14"/></svg>
+                                Search
+                            </span>
+                            <div class="spinner"></div>
+                        </button>
+
+                        <button class="btn-reset-search" id="resetBtn" onclick="handleReset()">
+                            <svg viewBox="0 0 14 14" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7a5 5 0 105-5H4M4 2L2 4l2 2"/></svg>
+                            Reset
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- Results status bar (hidden initially) -->
+                <div class="results-bar" id="resultsBar" style="display:none;">
+                    <div class="results-count" id="resultsCount">
+                        <span id="resultCountNum">0</span> results found
+                        <div class="results-query" id="resultsQueryBadge">
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="4.5" cy="4.5" r="3.5"/><path d="M7 7l2 2"/></svg>
+                            <span id="resultsQueryText"></span>
+                        </div>
+                    </div>
+                    <div class="results-nav-links">
+                        <a href="sms-history.html">
+                            <svg viewBox="0 0 12 12" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1.5" width="10" height="9" rx="1.2"/><path d="M3 5h6M3 7.5h4"/></svg>
+                            SMS History
+                        </a>
+                        <a href="../HTML/CUSTOMER.html">
+                            <svg viewBox="0 0 12 12" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="4" height="4" rx="0.8"/><rect x="7" y="1" width="4" height="4" rx="0.8"/><rect x="1" y="7" width="4" height="4" rx="0.8"/><rect x="7" y="7" width="4" height="4" rx="0.8"/></svg>
+                            Dashboard
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Table Card -->
+                <div class="table-card" id="tableCard">
+
+                    <!-- HINT STATE (before first search) -->
+                    <div class="hint-state" id="hintState">
+                        <div class="hint-icon">
+                            <svg viewBox="0 0 30 30" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="13" cy="13" r="10"/><path d="M21 21L28 28"/>
+                            <path d="M9 13h8M13 9v8"/>
+                            </svg>
+                        </div>
+                        <div class="hint-title">Search your sent messages</div>
+                        <div class="hint-sub">Enter a <strong>recipient phone number</strong> above and click Search to find all SMS messages sent to that number.</div>
+                    </div>
+
+                    <!-- EMPTY STATE (search returned 0) -->
+                    <div class="empty-state" id="emptyState" style="display:none;">
+                        <div class="empty-icon">
+                            <svg viewBox="0 0 28 28" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M24 4H4a1 1 0 00-1 1v14a1 1 0 001 1h18l4 4V5a1 1 0 00-1-1z"/>
+                            <path d="M9 11h10M9 15h6"/>
+                            </svg>
+                        </div>
+                        <div class="empty-title">No messages found</div>
+                        <div class="empty-sub">No SMS records match the number <strong id="emptyQuery"></strong>. Try a different number or check your SMS history.</div>
+                    </div>
+
+                    <!-- TABLE (hidden until results) -->
+                    <div id="tableWrap" style="display:none;">
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th><div class="th-sort" onclick="sortBy('id')">SMS ID <svg viewBox="0 0 10 10" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M5 1v8M2 6l3 3 3-3"/></svg></div></th>
+                                    <th><div class="th-sort" onclick="sortBy('to')">To <svg viewBox="0 0 10 10" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M5 1v8M2 6l3 3 3-3"/></svg></div></th>
+                                    <th>Body</th>
+                                    <th><div class="th-sort active" onclick="sortBy('date')">Date <svg viewBox="0 0 10 10" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M5 1v8M2 6l3 3 3-3"/></svg></div></th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="resultsBody"></tbody>
+                        </table>
+
+                        <!-- Pagination -->
+                        <div class="pagination" id="paginationBar">
+                            <div class="pagination-info" id="paginationInfo"></div>
+                            <div class="pagination-btns" id="paginationBtns"></div>
+                        </div>
+                    </div>
+
+                </div><!-- /table-card -->
+
+            </div><!-- /page-body -->
+        </main>
+        <div class="modal-overlay" id="deleteModal">
+
+            <div class="delete-modal">
+
+                <div class="modal-icon">
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+
+                <div class="modal-title">
+                    Delete Message
+                </div>
+
+                <div class="modal-text">
+                    Are you sure you want to delete this SMS?
+                </div>
+
+                <div class="modal-actions">
+
+                    <button class="modal-cancel"
+                            onclick="closeDeleteModal()">
+                        Cancel
+                    </button>
+
+                    <button class="modal-delete"
+                            onclick="confirmDelete()">
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div id="page-loader">
+            <div class="loader-card">
+                <div class="loader-logo"> <i class="fa-solid fa-message"></i> </div>
+
+                <h3>Loading SMS Search</h3>
+
+                <div class="loader-bar">
+                    <div class="loader-progress"></div>
+                </div>
+
+                <p>Please wait...</p>
+            </div>
+        </div>
+        <script src = "../JS/SEARCHSMS.js"></script>
+    </body>
+</html>
