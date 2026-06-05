@@ -134,4 +134,25 @@ public class Helper {
         }
         return false;
     }
+    
+    public static boolean deleteHistorySMSById(int smsId , Connection con) {
+        String sql = "SELECT delete_sms_from_history_by_id(?)";
+
+        try (PreparedStatement statement = con.prepareStatement(sql)) 
+        {
+            statement.setInt(1, smsId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) 
+            {
+                return resultSet.getBoolean(1);
+            }
+        } 
+        catch (Exception ex) 
+        {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }

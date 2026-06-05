@@ -16,6 +16,8 @@ public class SMSMessage {
     private Date sentDate;
     private String status;
     private String twilioMessageSid;
+    private int deleted_Id;
+    private Date deletedDate;
 
     public int getSmsId() {
         return smsId;
@@ -83,6 +85,14 @@ public class SMSMessage {
         this.twilioMessageSid = twilioMessageSid;
     }
 
+    public SMSMessage(int smsId, String toNumber, String body, int deleted_Id, Date deletedDate) {
+        this.smsId = smsId;
+        this.toNumber = toNumber;
+        this.body = body;
+        this.deleted_Id = deleted_Id;
+        this.deletedDate = deletedDate;
+    }
+    
     public static List<SMSMessage> GetAllSMSsByCustomerID(int cus_id, Connection con) 
     {
         List<SMSMessage> SMSs = new ArrayList();
@@ -113,5 +123,42 @@ public class SMSMessage {
             ex.printStackTrace();
         }
         return SMSs;
+    }
+    
+    public static List<SMSMessage> getSMSDeletedHistoryByCustomerId(int customerId ,Connection con )
+    {
+        List<SMSMessage> deletedMessages = new ArrayList<>();
+
+        String sql = "SELECT * FROM get_sms_history_deleted_by_customer_id(?)";
+
+        try
+        (
+            
+            PreparedStatement statement = con.prepareStatement(sql)
+        )
+        {
+            statement.setInt(1, customerId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next())
+            {
+                SMSMessage sms = new SMSMessage(
+                        resultSet.getInt("r_sms_id"),
+                        resultSet.getString("r_to_number"),
+                        resultSet.getString("r_sms_body"),
+                        resultSet.getInt("r_deleted_id"),
+                        resultSet.getTimestamp("r_deleted_at")
+                );
+
+                deletedMessages.add(sms);
+            }
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return deletedMessages;
     }
 }

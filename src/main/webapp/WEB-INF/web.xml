@@ -36,6 +36,14 @@
         <servlet-name>DeleteSmsServlet</servlet-name>
         <servlet-class>SMS_PK.DeleteSmsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetDeletedHistoryByCustomerIDServlet</servlet-name>
+        <servlet-class>SMS_PK.GetDeletedHistoryByCustomerIDServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteSmsHistoryServlet</servlet-name>
+        <servlet-class>SMS_PK.DeleteSmsHistoryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLoginServlet</servlet-name>
         <url-pattern>/UserLoginServlet</url-pattern>
@@ -67,6 +75,14 @@
     <servlet-mapping>
         <servlet-name>DeleteSmsServlet</servlet-name>
         <url-pattern>/DeleteSmsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetDeletedHistoryByCustomerIDServlet</servlet-name>
+        <url-pattern>/GetDeletedHistoryByCustomerIDServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteSmsHistoryServlet</servlet-name>
+        <url-pattern>/DeleteSmsHistoryServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

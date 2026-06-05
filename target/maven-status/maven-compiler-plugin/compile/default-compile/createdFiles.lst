@@ -1,5 +1,6 @@
 DB_PK/DB.class
 USERS_PK/UserAccountVerifyServlet.class
+SMS_PK/GetDeletedHistoryByCustomerIDServlet.class
 SMS_PK/SMSMessage.class
 CUSTOMER_PK/CustomerGetParametersServlet.class
 HELPER_PK/Helper.class
@@ -13,3 +14,4 @@ CUSTOMER_PK/CustomerGetDataServlet.class
 CUSTOMER_PK/Customer.class
 USERS_PK/User.class
 USERS_PK/UserLoginServlet.class
+SMS_PK/DeleteSmsHistoryServlet.class

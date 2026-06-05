@@ -271,30 +271,37 @@ function closeDeleteModal() {
 
 async function confirmDelete()
 {
-    if (!selectedSmsId)
+    if (selectedSmsId === null)
         return;
-
+     document
+            .getElementById("deleteModal")
+            .classList.remove("show");
     try
     {
-        const response = await fetch("../DeleteSmsServlet",
+        const response = await fetch(
+            "../DeleteSmsServlet",
+            {
+                method: "POST",
+                headers:
                 {
-                    method: "POST",
-                    headers:
-                            {
-                                "Content-Type": "application/x-www-form-urlencoded"
-                            },
-                    body: "id=" + encodeURIComponent(selectedSmsId)
-                });
+                    "Content-Type":
+                        "application/x-www-form-urlencoded"
+                },
+                body:
+                    "id=" +
+                    encodeURIComponent(selectedSmsId)
+            });
 
-        const result = await response.text();
-
-        console.log(result);
+        if (!response.ok)
+            throw new Error(
+                "HTTP Error: " + response.status
+            );
 
         closeDeleteModal();
 
-        window.location.reload();
-
-    } catch (error)
+        location.reload();
+    }
+    catch(error)
     {
         console.error(error);
     }
