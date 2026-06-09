@@ -51,7 +51,8 @@ public class UserRegisterServlet extends HttpServlet {
                     session.setAttribute("twilioSender", twilioSender);
                     session.setAttribute("otpCode", otpCode);
                     System.out.println("otpCode = " + otpCode);
-                    try {
+                    try 
+                    {
                         Twilio.init(twilioSid, twilioToken);
                         Message message = Message.creator(
                                 new PhoneNumber(phone),

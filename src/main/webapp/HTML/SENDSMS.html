@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Send SMS — Twilio SMS Client</title>
+        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        <link rel="stylesheet" href="../CSS/EDITPROFILECUSTOMER.css">
+        <link rel="stylesheet" href="../CSS/SENDSMS.css">
+        <style>
+  
+        </style>
+    </head>
+    <body>
+
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+
+        <!-- Toast -->
+        <div class="toast" id="toast">
+            <svg viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5 6.5-7"/></svg>
+            SMS sent successfully!
+        </div>
+
+        <!-- ── SIDEBAR ── -->
+        <aside class="sidebar">
+            <a href="../HTML/HOME.html" class="sidebar-logo">
+                <div class="s-logo-icon">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 4H2a1 1 0 00-1 1v10a1 1 0 001 1h14l4 3V5a1 1 0 00-1-1z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="s-logo-text">Twilio SMS</div>
+                    <span class="s-logo-sub">Customer Portal</span>
+                </div>
+            </a>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="user-avatar"></div>
+                <div>
+                    <div class="user-name" id="user-name"></div>
+                    <div class="user-role">Customer Account</div>
+                </div>
+                <div class="online-dot"></div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Main</div>
+                <a href="../HTML/CUSTOMER.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="1" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="1" width="5.5" height="5.5" rx="1.2"/>
+                        <rect x="1" y="8.5" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2"/>
+                        </svg>
+                    </div>
+                    Dashboard
+                </a>
+                <a href="../HTML/CUSTOMERPROFILE.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="7.5" cy="5" r="3"/><path d="M1 14c0-3.6 2.9-6.5 6.5-6.5S14 10.4 14 14"/>
+                        </svg>
+                    </div>
+                    My Profile
+                </a>
+                <a href="../HTML/EDITPROFILECUSTOMER.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.5 2.5l2 2L5 12H3v-2l7.5-7.5z"/><path d="M9 4l2 2"/>
+                        </svg>
+                    </div>
+                    Edit Profile
+                </a>
+                <div class="nav-section-label">SMS</div>
+                <a href="../HTML/SENDSMS.html" class="nav-item active">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2L1 7l5 2.5L13 2zM6 9.5L8.5 14 13 2"/>
+                        </svg>
+                    </div>
+                    Send SMS
+                </a>
+                <a href="../HTML/SMSHISTORY.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="2" width="13" height="11" rx="1.5"/><path d="M4 6h7M4 9h5"/>
+                        </svg>
+                    </div>
+                    SMS History
+                </a>
+                <a href="../HTML/SEARCHSMS.html" class="nav-item">
+                    <div class="nav-icon">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14 14"/>
+                        </svg>
+                    </div>
+                    Search SMS
+                </a>
+                <div style="flex:1;"></div>
+                <a href="../HTML/LOGIN.html" class="nav-item logout">
+                    <div class="nav-icon" style="background:rgba(232,23,60,0.06);">
+                        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 7.5H3M7 4.5l-3 3 3 3"/><path d="M6 2H13.5V13H6"/>
+                        </svg>
+                    </div>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- ── MAIN ── -->
+        <main class="main">
+            <div class="topbar">
+                <div>
+                    <div class="topbar-title">Send SMS</div>
+                    <div class="topbar-sub">Compose and send a message via your Twilio account</div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-time" id="clock"></div>
+                    <div class="topbar-avatar" id="topbar-avatar"></div>
+                </div>
+            </div>
+
+            <div class="page-body">
+                <!-- Page header -->
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <div class="page-header-badge"><span class="badge-dot"></span>Compose Mode</div>
+                        <div class="page-header-title">New Message, <span style="color: #E8173C;" id="usr-head-name"></span></div>
+                        <div class="page-header-sub">Using your Twilio credentials on file</div>
+                    </div>
+                    <div class="page-header-avatar" id="page-header-avatar"></div>
+                </div>
+
+                <!-- Error banner -->
+                <div class="error-banner" id="errorBanner">
+                    <svg viewBox="0 0 16 16" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3M8 10v.5"/></svg>
+                    <div>
+                        <div style="font-weight:500;margin-bottom:0.3rem;">Please fix the following:</div>
+                        <ul class="error-list" id="errorList"></ul>
+                    </div>
+                </div>
+
+                <!-- Form Card -->
+                <div class="form-card">
+                    <form id="sendSmsForm" action="../CustomerSendSmsServlet" method="POST" novalidate> , 
+                        <input class="field-input" id="twilioSid" name="twilioSid" type="text" hidden>
+                        <input class="field-input" id="twilioToken" name="twilioToken" type="text" hidden>
+                        <!-- ── Section 1: Numbers ── -->
+                        <div class="form-section">
+                            <div class="form-section-head">
+                                <div class="form-section-icon">
+                                    <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3.5" y="1" width="8" height="13" rx="1.5"/><path d="M6.5 11.5h2"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="form-section-title">Phone Numbers</div>
+                                </div>
+                                <span class="form-section-sub">International format required</span>
+                            </div>
+
+                            <div class="fields-grid">
+                                <!-- From -->
+                                <div class="field-group">
+                                    <label class="field-label">From <span class="req">·</span></label>
+                                    <div class="field-wrap">
+                                        <span class="field-icon">
+                                            <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M13 2L1 7l5 2.5L13 2zM6 9.5L8.5 14 13 2"/>
+                                            </svg>
+                                        </span>
+                                        <input class="field-input" id="fromNumber" name="fromNumber" type="text"
+                                               placeholder="+16624957872" oninput="liveValidate('fromNumber')">
+                                        <span class="field-tick" id="fromNumberTick">
+                                            <svg viewBox="0 0 15 15" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 7.5l3.5 3.5 6-7"/></svg>
+                                        </span>
+                                        <div class="field-error" id="fromNumberError">
+                                            <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg>
+                                            <span id="fromNumberMsg">Required</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- To -->
+                                <div class="field-group">
+                                    <label class="field-label">To <span class="req">·</span></label>
+                                    <div class="field-wrap">
+                                        <span class="field-icon">
+                                            <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3.5" y="1" width="8" height="13" rx="1.5"/><path d="M6.5 11.5h2"/>
+                                            </svg>
+                                        </span>
+                                        <input class="field-input" id="toNumber" name="toNumber" type="text"
+                                               placeholder="+12025551234" oninput="liveValidate('toNumber')">
+                                        <span class="field-tick" id="toNumberTick">
+                                            <svg viewBox="0 0 15 15" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 7.5l3.5 3.5 6-7"/></svg>
+                                        </span>
+                                        <div class="field-error" id="toNumberError">
+                                            <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg>
+                                            <span id="toNumberMsg">Required</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-divider"></div>
+
+                        <!-- ── Section 2: Message Body ── -->
+                        <div class="form-section">
+                            <div class="form-section-head">
+                                <div class="form-section-icon">
+                                    <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M13 1H2a1 1 0 00-1 1v9a1 1 0 001 1h9l3 2V2a1 1 0 00-1-1z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="form-section-title">Message</div>
+                                </div>
+                                <span class="form-section-sub">Max 1600 characters</span>
+                            </div>
+
+                            <div class="fields-grid">
+                                <!-- SMS Body -->
+                                <div class="field-group field-full">
+                                    <label class="field-label">SMS Body <span class="req">·</span></label>
+                                    <div class="field-wrap">
+                                        <textarea class="field-input" id="smsBody" name="smsBody"
+                                                  placeholder="Type your message here…"
+                                                  rows="5" oninput="onBodyInput()"></textarea>
+                                        <div class="field-error" id="smsBodyError">
+                                            <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 4v2M6 8v.3"/></svg>
+                                            <span id="smsBodyMsg">Message is required</span>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.35rem;">
+                                        <div class="segment-info" id="segmentInfo" style="display:none!important;">
+                                            <span class="segment-pill" id="segmentPill">
+                                                <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="1" y="1" width="10" height="10" rx="1.5"/><path d="M3.5 6h5M3.5 4h5M3.5 8h3"/></svg>
+                                                <span id="segmentCount">1 segment</span>
+                                            </span>
+                                        </div>
+                                        <div class="char-counter" id="charCounter" style="margin-left:auto;">0 / 160</div>
+                                    </div>
+                                </div>
+
+                                <!-- Live SMS Preview -->
+                                <div class="field-group field-full">
+                                    <div class="sms-preview-wrap">
+                                        <div class="sms-preview-label">
+                                            <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M11 1H1a.5.5 0 00-.5.5v8A.5.5 0 001 10h8.5l2 1.5V1.5A.5.5 0 0011 1z"/></svg>
+                                            Live Preview
+                                        </div>
+                                        <div class="sms-bubble-container">
+                                            <div class="sms-meta" id="previewMeta">Today</div>
+                                            <div class="sms-bubble empty" id="previewBubble">Your message will appear here…</div>
+                                            <div class="sms-bubble-from" id="previewFrom">From: —</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ── Form Actions ── -->
+                        <div class="form-actions">
+                            <!-- Send -->
+                            <button type="button" class="btn-save" id="sendBtn" onclick="handleSend()">
+                                <span class="save-label" style="display:flex;align-items:center;gap:0.45rem;">
+                                    <svg viewBox="0 0 15 15" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L1 7l5 2.5L13 2zM6 9.5L8.5 14 13 2"/></svg>
+                                    Send SMS
+                                </span>
+                                <div class="spinner"></div>
+                            </button>
+
+                            <!-- Clear -->
+                            <button type="button" class="btn-reset" onclick="handleClear()">
+                                <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l9 9M12 3l-9 9"/></svg>
+                                Clear
+                            </button>
+
+                            <!-- Back to Dashboard -->
+                            <a href="../HTML/CUSTOMER.html" class="btn-cancel">
+                                <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 7.5H3M7 4.5l-3 3 3 3"/></svg>
+                                Dashboard
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <!-- Page Loader -->
+        <div id="page-loader">
+            <div class="loader-card">
+                <div class="loader-logo">
+                    <i class="fa-solid fa-message"></i>
+                </div>
+                <h3>Loading Sending SMS …</h3>
+                <div class="loader-bar"><div class="loader-progress"></div></div>
+                <p>Message</p>
+            </div>
+        </div>
+
+        <script src = "../JS/SENDSMS.js"></script>
+    </body>
+</html>
