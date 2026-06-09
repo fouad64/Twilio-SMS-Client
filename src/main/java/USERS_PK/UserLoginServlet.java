@@ -14,9 +14,10 @@ public class UserLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
+        Connection con = null;
         try 
         {
-            Connection con = DB.getConnection();
+            con = DB.getConnection();
             String userType = request.getParameter("userType");
 
             String username = request.getParameter("username");
@@ -48,7 +49,13 @@ public class UserLoginServlet extends HttpServlet {
         catch (Exception ex) 
         {
             ex.printStackTrace();
-        }   
+            response.sendRedirect(request.getContextPath() + "/HTML/login-failed.html");
+        }
+        finally {
+            if (con != null) {
+                try { con.close(); } catch (Exception ignored) {}
+            }
+        }
     }
 
 }

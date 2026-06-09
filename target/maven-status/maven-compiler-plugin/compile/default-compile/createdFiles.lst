@@ -1,11 +1,16 @@
 DB_PK/DB.class
 USERS_PK/UserAccountVerifyServlet.class
+CUSTOMER_PK/AdminEditCustomerServlet.class
+CUSTOMER_PK/AdminGetCustomersServlet.class
 CUSTOMER_PK/CustomerGetParametersServlet.class
 HELPER_PK/Helper.class
 USERS_PK/UserRegisterServlet.class
+DBConnection.class
 CUSTOMER_PK/CustomerParameters.class
 CUSTOMER_PK/CustomerEditDataServlet.class
 CUSTOMER_PK/CustomerGetDataServlet.class
 CUSTOMER_PK/Customer.class
 USERS_PK/User.class
+CUSTOMER_PK/AdminDashboardStatsServlet.class
 USERS_PK/UserLoginServlet.class
+CUSTOMER_PK/AdminDeleteCustomerServlet.class

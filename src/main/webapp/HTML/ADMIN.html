@@ -54,7 +54,7 @@
                     Dashboard
                 </a>
 
-                <a href="manage-customers.html" class="nav-item">
+                <a href="admin-manage-customers.html" class="nav-item">
                     <div class="nav-icon">
                         <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="5.5" cy="5" r="2.5"/><path d="M1 13c0-2.8 2-4.5 4.5-4.5S10 10.2 10 13"/>
@@ -145,7 +145,7 @@
                             </svg>
                         </div>
                         <div class="stat-label">Total Customers</div>
-                        <div class="stat-value">84</div>
+                        <div class="stat-value" id="statTotal">84</div>
                        
                     </div>
 
@@ -157,8 +157,7 @@
                             </svg>
                         </div>
                         <div class="stat-label">Total SMS in System</div>
-                        <div class="stat-value" style="color:#60a5fa;">48,392</div>
-
+                    <div class="stat-value" style="color:#60a5fa;" id="statMessages">48,392</div>
                     </div>
 
                     <div class="stat-card">
@@ -169,8 +168,7 @@
                             </svg>
                         </div>
                         <div class="stat-label">Most Active Customer</div>
-                        <div class="stat-value" style="font-size:1.05rem;margin-top:0.3rem;">Sarah K.</div>
-                        
+<div class="stat-value" style="font-size:1.05rem;margin-top:0.3rem;" id="statMostActive">Sarah K.</div>                        
                     </div>
                 </div>
 
@@ -183,7 +181,7 @@
                 </div>
 
                 <div class="actions-grid">
-                    <a href="manage-customers.html" class="action-card ac-gold">
+                    <a href="admin-manage-customers.html" class="action-card ac-gold">
                         <div class="action-icon">
                             <svg viewBox="0 0 20 20" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="7" cy="6" r="3.5"/><path d="M1 18c0-3.8 2.7-6 6-6s6 2.2 6 6"/>

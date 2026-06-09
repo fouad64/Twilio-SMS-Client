@@ -1,52 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+<web-app version="6.0"
+         xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+
     <servlet>
         <servlet-name>UserLoginServlet</servlet-name>
         <servlet-class>USERS_PK.UserLoginServlet</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>UserRegisterServlet</servlet-name>
         <servlet-class>USERS_PK.UserRegisterServlet</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>UserAccountVerifyServlet</servlet-name>
         <servlet-class>USERS_PK.UserAccountVerifyServlet</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>CustomerGetParameters</servlet-name>
         <servlet-class>CUSTOMER_PK.CustomerGetParametersServlet</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>CustomerGetDataServlet</servlet-name>
         <servlet-class>CUSTOMER_PK.CustomerGetDataServlet</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>CustomerEditDataServlet</servlet-name>
         <servlet-class>CUSTOMER_PK.CustomerEditDataServlet</servlet-class>
     </servlet>
+
+
+    <!-- AdminEditCustomerServlet removed because it is already mapped with @WebServlet -->
+
     <servlet-mapping>
         <servlet-name>UserLoginServlet</servlet-name>
         <url-pattern>/UserLoginServlet</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>UserRegisterServlet</servlet-name>
         <url-pattern>/UserRegisterServlet</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>UserAccountVerifyServlet</servlet-name>
         <url-pattern>/UserAccountVerifyServlet</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>CustomerGetDataServlet</servlet-name>
         <url-pattern>/CustomerGetDataServlet</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>CustomerEditDataServlet</servlet-name>
         <url-pattern>/CustomerEditDataServlet</url-pattern>
     </servlet-mapping>
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+
+       <session-config>
+        <session-timeout>30</session-timeout>
     </session-config>
+
 </web-app>
