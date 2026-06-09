@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Customers — Twilio SMS Client</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght=0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/admin-manage-customers.css">
+</head>
+<body>
+
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <div class="toast" id="toast">
+    <svg viewBox="0 0 16 16" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" id="toastIcon">
+      <path id="toastPath" d="M3 8l3.5 3.5 6.5-7"/>
+    </svg>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <aside class="sidebar">
+    <a href="../HTML/HOME.html" class="sidebar-logo">
+      <div class="s-logo-icon">
+        <svg viewBox="0 0 20 20" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 4H2a1 1 0 00-1 1v10a1 1 0 001 1h14l4 3V5a1 1 0 00-1-1z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="s-logo-text">Twilio SMS</div>
+        <span class="s-logo-sub">Admin Portal</span>
+      </div>
+    </a>
+    <div class="sidebar-user">
+      <div class="user-avatar">AD</div>
+      <div>
+        <div class="user-name">Administrator</div>
+        <div class="user-role">
+          <svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 1l1.5 2.5 2.5.4-1.8 1.8.4 2.5L5 7l-2.6 1.2.4-2.5L1 3.9l2.5-.4z"/></svg>
+          System Administrator
+        </div>
+      </div>
+      <div class="admin-dot"></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Administration</div>
+      <a href="../HTML/ADMIN.html" class="nav-item">
+        <div class="nav-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="1" width="5.5" height="5.5" rx="1.2"/><rect x="1" y="8.5" width="5.5" height="5.5" rx="1.2"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2"/></svg></div>
+        Dashboard
+      </a>
+      <a href="admin-manage-customers.html" class="nav-item active">
+        <div class="nav-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.5"/><path d="M1 13c0-2.8 2-4.5 4.5-4.5S10 10.2 10 13"/><path d="M11 7l2 2 2-2M13 5v4"/></svg></div>
+        Manage Customers
+      </a>
+      <a href="add-customer.html" class="nav-item">
+        <div class="nav-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="5" r="2.5"/><path d="M1 13c0-2.8 2-4.5 5-4.5s5 1.7 5 4.5"/><path d="M11.5 2v5M9 4.5h5"/></svg></div>
+        Add New Customer
+      </a>
+      <div style="flex:1"></div>
+      <a href="../HTML/LOGIN.html" class="nav-item logout">
+        <div class="nav-icon" style="background:rgba(232,23,60,0.06)"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 7.5H3M7 4.5l-3 3 3 3"/><path d="M6 2H13.5V13H6"/></svg></div>
+        Logout
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="admin-badge"><div class="admin-badge-dot"></div>Admin Access · Full Control</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title">Manage Customers</div>
+        <div class="topbar-sub">View, edit, activate or deactivate system customers</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-time" id="clock"></div>
+        <div class="topbar-avatar">AD</div>
+      </div>
+    </div>
+
+    <div class="page-body">
+      <div class="stats-row" id="statsRow">
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.5"/><path d="M1 13c0-2.8 2-4.5 4.5-4.5S10 10.2 10 13"/><path d="M11 7l2 2 2-2M13 5v4"/></svg></div>
+          <div class="stat-label">Total Customers</div>
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-sub">Registered accounts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="6.5"/><path d="M5 7.5l2 2 3-3"/></svg></div>
+          <div class="stat-label">Active</div>
+          <div class="stat-value green" id="statActive">0</div>
+          <div class="stat-sub">Can log in & send SMS</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="6.5"/><path d="M5 5l5 5M10 5l-5 5"/></svg></div>
+          <div class="stat-label">Inactive</div>
+          <div class="stat-value red" id="statInactive">0</div>
+          <div class="stat-sub">Deactivated accounts</div>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <div class="search-wrap">
+          <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14 14"/></svg>
+          <input type="text" id="searchInput" placeholder="Search by name, username or email..." oninput="filterCustomers()">
+        </div>
+        <div class="controls-right">
+          <div class="tabs-wrap">
+            <button class="tab-btn active" id="tabAll" onclick="switchTab('all')">All</button>
+            <button class="tab-btn" id="tabActive" onclick="switchTab('active')">Active</button>
+            <button class="tab-btn" id="tabInactive" onclick="switchTab('inactive')">Inactive</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="list-card">
+        <div class="table-container">
+          <table class="customers-table">
+            <thead>
+              <tr>
+                <th>Customer Profile</th>
+                <th>Contact</th>
+                <th>Twilio SID</th>
+                <th>Status</th>
+                <th>Registered</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="editModal">
+    <div class="modal-card" style="position:relative">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="modalTitle">Add New Customer</h2>
+          <p class="modal-subtitle" id="modalSubtitle">Fill in the details below to register a new customer</p>
+        </div>
+        <button class="close-modal-btn" onclick="closeEditModal()">
+          <svg viewBox="0 0 15 15" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 1.5l12 12m-12 0l12-12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm" autocomplete="off">
+          <input type="hidden" id="editId">
+
+          <div class="sec-title">
+            <div class="sec-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="4.5" r="3"/><path d="M1 14c0-3.6 2.9-6.5 6.5-6.5S14 10.4 14 14"/></svg></div>
+            <span class="sec-name">Personal Information</span>
+          </div>
+          <div class="fields-grid">
+            <div class="field-group field-full">
+              <label class="field-label">Full Name <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="4.5" r="3"/><path d="M1 14c0-3.6 2.9-6.5 6.5-6.5S14 10.4 14 14"/></svg></span>
+                <input class="field-input" id="fName" type="text" placeholder="John Doe" required>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Date of Birth <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2.5" width="13" height="12" rx="1.5"/><path d="M5 1v3M10 1v3M1 7h13"/></svg></span>
+                <input class="field-input" id="fDob" type="date" style="color-scheme:dark" required>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Job Title <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="13" height="9" rx="1.5"/><path d="M5 5V3.5a2.5 2.5 0 015 0V5"/></svg></span>
+                <input class="field-input" id="fJob" type="text" placeholder="e.g. Developer" required>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Email Address <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="13" height="9" rx="1.5"/><path d="M1 6l6.5 4.5L14 6"/></svg></span>
+                <input class="field-input" id="fEmail" type="email" placeholder="john@example.com" required>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Phone Number <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="1" width="8" height="13" rx="1.5"/><path d="M6.5 11.5h2"/></svg></span>
+                <input class="field-input" id="fPhone" type="text" placeholder="+1234567890" required>
+              </div>
+            </div>
+            <div class="field-group field-full">
+              <label class="field-label">Home Address <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1L1 7h2v7h3v-4h3v4h3V7h2z"/></svg></span>
+                <input class="field-input" id="fAddress" type="text" placeholder="123 Main St, City" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec-title">
+            <div class="sec-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="10" height="8" rx="1.5"/><path d="M5 6.5V4.5a2.5 2.5 0 015 0v2"/></svg></div>
+            <span class="sec-name">Account Security</span>
+          </div>
+          <div class="fields-grid">
+            <div class="field-group">
+              <label class="field-label">Username <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="4.5" r="3"/><path d="M1 14c0-3.6 2.9-6.5 6.5-6.5S14 10.4 14 14"/></svg></span>
+                <input class="field-input" id="fUsername" type="text" placeholder="username" required>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Password <span id="pwReqLabel" class="req">·</span><span id="pwOptLabel" class="opt" style="display:none"> (optional – leave blank to keep)</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="10" height="8" rx="1.5"/><path d="M5 6.5V4.5a2.5 2.5 0 015 0v2"/></svg></span>
+                <input class="field-input" id="fPassword" type="password" placeholder="••••••••">
+                <button class="eye-btn" type="button" onclick="togglePw('fPassword','eyePw')">
+                  <svg id="eyePw" viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7.5s2.5-5 6.5-5 6.5 5 6.5 5-2.5 5-6.5 5-6.5-5-6.5-5z"/><circle cx="7.5" cy="7.5" r="2"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="toggle-row">
+              <label class="toggle-switch">
+                <input type="checkbox" id="fActive" checked>
+                <span class="toggle-slider"></span>
+              </label>
+              <div class="toggle-label">
+                <div class="toggle-main">Activate Account</div>
+                <div class="toggle-sub">Allow this customer to log in and send messages</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec-title">
+            <div class="sec-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="6.5"/><path d="M7.5 4v3.5l2.5 1.5"/></svg></div>
+            <span class="sec-name">Twilio Configuration</span>
+          </div>
+          <div class="fields-grid">
+            <div class="field-full field-group">
+              <label class="field-label">Account SID <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="13" height="9" rx="1.5"/><path d="M4 6.5h7M4 9h4"/></svg></span>
+                <input class="field-input mono" id="fSid" type="text" placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" required>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Auth Token <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="10" height="8" rx="1.5"/><path d="M5 6.5V4.5a2.5 2.5 0 015 0v2"/></svg></span>
+                <input class="field-input mono" id="fToken" type="password" placeholder="Auth token" required>
+                <button class="eye-btn" type="button" onclick="togglePw('fToken','eyeToken')">
+                  <svg id="eyeToken" viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7.5s2.5-5 6.5-5 6.5 5 6.5 5-2.5 5-6.5 5-6.5-5-6.5-5z"/><circle cx="7.5" cy="7.5" r="2"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Sender ID <span class="req">·</span></label>
+              <div class="field-wrap">
+                <span class="field-icon"><svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3H2a1 1 0 00-1 1v7a1 1 0 001 1h9l3 2V4a1 1 0 00-1-1z"/></svg></span>
+                <input class="field-input" id="fSender" type="text" placeholder="+1xxxxxxxxxx" required>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+        <button class="btn-save" id="saveBtn" onclick="saveCustomer()">
+          <span class="btn-label" style="display:flex;align-items:center;gap:.5rem">
+            <svg viewBox="0 0 15 15" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3H5L2 6v6a1 1 0 001 1h10a1 1 0 001-1V4a1 1 0 00-1-1zM10 13V9H5v4M5 3v4h7"/></svg>
+            Save Changes
+          </span>
+          <div class="spinner"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="delModal">
+    <div class="del-modal-card">
+      <div class="del-icon">
+        <svg viewBox="0 0 15 15" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 3 12 3"/><path d="M5 3V2h5v1"/><path d="M4 3l.5 9h6l.5-9"/><path d="M7.5 6v4"/><path d="M5.5 6l.2 4M9.5 6l-.2 4"/></svg>
+      </div>
+      <div class="del-title">Delete Customer?</div>
+      <div class="del-sub" id="delSubText">This will permanently remove the customer and all associated data. This action cannot be undone.</div>
+      <div class="del-actions">
+        <button class="btn-cancel" onclick="closeDelModal()">Cancel</button>
+        <button class="btn-del-confirm" onclick="confirmDelete()">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../JS/admin-manage-customers.js"></script>
+</body>
+</html>

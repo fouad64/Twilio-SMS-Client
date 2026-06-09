@@ -1,0 +1,49 @@
+# =========================
+# Maven build output
+# =========================
+target/
+
+# =========================
+# NetBeans IDE files
+# =========================
+nbproject/private/
+nbproject/Makefile-*.mk
+nbproject/build-impl.xml
+nbproject/project.properties
+nbproject/project.xml
+
+# =========================
+# IDE settings
+# =========================
+*.iml
+.idea/
+.vscode/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Java compiled files
+# (usually inside target, but safe to include)
+# =========================
+*.class
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# WAR / deployment artifacts
+# =========================
+*.war
+*.ear
+
+# =========================
+# NetBeans cache
+# =========================
+nbactions.xml
+nb-configuration.xml
